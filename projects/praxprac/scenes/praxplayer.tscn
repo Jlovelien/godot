@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://c126ngx2plml"]
+
+[ext_resource type="Texture2D" uid="uid://cqd3jp4gtb0w1" path="res://assets/Old hero.png" id="1_obr4f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obr4f"]
+atlas = ExtResource("1_obr4f")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krbot"]
+atlas = ExtResource("1_obr4f")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlifb"]
+atlas = ExtResource("1_obr4f")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ywhba"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obr4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krbot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlifb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rwxkt"]
+radius = 5.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+up_direction = Vector2(0.994112, -0.108358)
+slide_on_ceiling = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -8)
+sprite_frames = SubResource("SpriteFrames_ywhba")
+animation = &"idle"
+autoplay = "idle"
+frame = 1
+frame_progress = 0.797743
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -8)
+shape = SubResource("CapsuleShape2D_rwxkt")

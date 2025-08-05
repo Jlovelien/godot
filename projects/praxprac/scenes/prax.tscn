@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d02gy236n4qav"]
+
+[ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/praxplayer.tscn" id="1_b2pbj"]
+
+[node name="Prax" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_b2pbj")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(15, 15)
