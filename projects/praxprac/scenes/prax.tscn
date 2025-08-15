@@ -2742,6 +2742,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(131075, 1703936, 35, 196605, 2031616, 22, 196601, 2031616, 22, -131060, 1703936, 35, 262169, 1703936, 35, 262175, 2031616, 22, 35, 2031616, 22, -196612, 3145728, 44, -131050, 3145728, 44, 30, 3342336, 44, 131120, 2031616, 22, -196566, 2031616, 22)
 
 [node name="Player" parent="." instance=ExtResource("1_b2pbj")]
+position = Vector2(-5, 0)
 up_direction = Vector2(0, -1)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
