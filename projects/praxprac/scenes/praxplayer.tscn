@@ -1,6 +1,34 @@
-[gd_scene load_steps=7 format=3 uid="uid://c126ngx2plml"]
+[gd_scene load_steps=8 format=3 uid="uid://c126ngx2plml"]
 
 [ext_resource type="Texture2D" uid="uid://cqd3jp4gtb0w1" path="res://assets/Old hero.png" id="1_obr4f"]
+
+[sub_resource type="GDScript" id="GDScript_obr4f"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 120.0
+const JUMP_VELOCITY = -350.0
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_obr4f"]
 atlas = ExtResource("1_obr4f")
@@ -38,14 +66,14 @@ height = 14.0
 [node name="Player" type="CharacterBody2D"]
 up_direction = Vector2(0.994112, -0.108358)
 slide_on_ceiling = false
+script = SubResource("GDScript_obr4f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -8)
 sprite_frames = SubResource("SpriteFrames_ywhba")
 animation = &"idle"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.797743
+frame_progress = 0.862463
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -8)
