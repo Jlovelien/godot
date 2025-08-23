@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqd3jp4gtb0w1"
-path="res://.godot/imported/Old hero.png-21b4d306b1d3f875b30ece98c59fc131.ctex"
+uid="uid://c411bfljow5q4"
+path="res://.godot/imported/background_cloudA.png-0650ded9bd21ff2dc3f6fbc471230b78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Old hero.png"
-dest_files=["res://.godot/imported/Old hero.png-21b4d306b1d3f875b30ece98c59fc131.ctex"]
+source_file="res://assets/background_cloudA.png"
+dest_files=["res://.godot/imported/background_cloudA.png-0650ded9bd21ff2dc3f6fbc471230b78.ctex"]
 
 [params]
 
