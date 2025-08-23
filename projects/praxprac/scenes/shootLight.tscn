@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8wks33ieau2u"]
+
+[ext_resource type="Script" uid="uid://cmgqq5age67ta" path="res://scripts/shoot_light.gd" id="1_147fl"]
+[ext_resource type="Texture2D" uid="uid://d1syuw5iht3ob" path="res://assets/laser.png" id="2_ytohy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upram"]
+atlas = ExtResource("2_ytohy")
+region = Rect2(350, 280, 70, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb8c7"]
+atlas = ExtResource("2_ytohy")
+region = Rect2(350, 210, 70, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_16dw5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upram")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb8c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb8c7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="shootLight" type="Node2D"]
+script = ExtResource("1_147fl")
+
+[node name="lightSpawn" type="Marker2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(556.5, 0)
+scale = Vector2(16.9, 1)
+sprite_frames = SubResource("SpriteFrames_16dw5")
+frame = 4
+frame_progress = 1.0

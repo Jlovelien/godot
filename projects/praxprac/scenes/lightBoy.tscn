@@ -1,16 +1,17 @@
-[gd_scene load_steps=10 format=4 uid="uid://d02gy236n4qav"]
+[gd_scene load_steps=11 format=4 uid="uid://d02gy236n4qav"]
 
-[ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/praxplayer.tscn" id="1_b2pbj"]
-[ext_resource type="Texture2D" uid="uid://ctg8dnmvujdau" path="res://assets/tilemap.png" id="2_uchep"]
-[ext_resource type="Texture2D" uid="uid://bqjvvk35ex5uk" path="res://assets/blue_land.png" id="3_ys2th"]
-[ext_resource type="Texture2D" uid="uid://dix7hekigmub" path="res://assets/background_cloudB.png" id="4_3d5yy"]
-[ext_resource type="Texture2D" uid="uid://c411bfljow5q4" path="res://assets/background_cloudA.png" id="5_w82cb"]
+[ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/player.tscn" id="1_1dgru"]
+[ext_resource type="PackedScene" uid="uid://c8wks33ieau2u" path="res://scenes/shootLight.tscn" id="2_5saiw"]
+[ext_resource type="Texture2D" uid="uid://ctg8dnmvujdau" path="res://assets/tilemap.png" id="2_6gmyu"]
+[ext_resource type="Texture2D" uid="uid://bqjvvk35ex5uk" path="res://assets/blue_land.png" id="3_5saiw"]
+[ext_resource type="Texture2D" uid="uid://dix7hekigmub" path="res://assets/background_cloudB.png" id="4_otl2l"]
+[ext_resource type="Texture2D" uid="uid://c411bfljow5q4" path="res://assets/background_cloudA.png" id="5_g2qav"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uchep"]
 tile_data = PackedInt32Array(0, 262144, 6, 1, 327680, 6, 2, 393216, 6)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6plqa"]
-texture = ExtResource("2_uchep")
+texture = ExtResource("2_6gmyu")
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(18, 18)
 0:0/0 = 0
@@ -252,15 +253,17 @@ pattern_0 = SubResource("TileMapPattern_uchep")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3d5yy"]
 
-[node name="Prax" type="Node2D"]
+[node name="lightBoy" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_b2pbj")]
+[node name="Player" parent="." instance=ExtResource("1_1dgru")]
 position = Vector2(94, -44)
 scale = Vector2(0.12202, 0.12202)
 up_direction = Vector2(0, -1)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(5, 5)
+
+[node name="shootLight" parent="Player" instance=ExtResource("2_5saiw")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAD9/wAAAAABAAAAAAD+/wAAAAACAAAAAAD//wAAAAACAAAAAAAAAAAAAAACAAAAAAABAAAAAAACAAAAAAACAAAAAAACAAAAAAADAAAAAAACAAAAAAAEAAAAAAACAAAAAAAFAAAAAAACAAAAAAAGAAAAAAADAAAAAAAFAP7/AAAEAAAAAAAGAP7/AAAFAAAAAAAHAP7/AAAFAAAAAAAIAP7/AAAFAAAAAAAJAP7/AAAGAAAAAAABAP//AAAAAAQAAAACAP//AAABAAQAAAAFAPz/AAAEAAYAAAAGAPz/AAAFAAYAAAAHAPz/AAAGAAYAAAD///3/AAAEAAYAAAAAAP3/AAAFAAYAAAABAP3/AAAGAAYAAAAJAP3/AAACAAQAAAAKAP3/AAACAAAAAAALAP3/AAADAAQAAAA=")
@@ -274,13 +277,13 @@ motion_scale = Vector2(0.225, 0.225)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(101, 12)
 scale = Vector2(0.72, 0.28)
-texture = ExtResource("3_ys2th")
+texture = ExtResource("3_5saiw")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(-21, -104)
-texture = ExtResource("4_3d5yy")
+texture = ExtResource("4_otl2l")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2(0, 2)
@@ -288,7 +291,7 @@ motion_scale = Vector2(0.78, 0.78)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
 position = Vector2(135, -104)
-texture = ExtResource("5_w82cb")
+texture = ExtResource("5_g2qav")
 
 [node name="DeathLine" type="Area2D" parent="."]
 position = Vector2(102, 28)
