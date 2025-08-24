@@ -250,7 +250,9 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_6plqa")
 pattern_0 = SubResource("TileMapPattern_uchep")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3d5yy"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1dgru"]
+normal = Vector2(-3.53174e-09, -1)
+distance = 1.20546
 
 [node name="lightBoy" type="Node2D"]
 
@@ -266,13 +268,22 @@ gizmo_extents = 64.0
 tile_map_data = PackedByteArray("AAD5/wMAAAABAAAAAAD6/wMAAAACAAAAAAD7/wMAAAACAAAAAAD8/wMAAAACAAAAAAD9/wMAAAACAAAAAAD+/wMAAAACAAAAAAD//wMAAAACAAAAAAAAAAMAAAACAAAAAAABAAMAAAACAAAAAAAGAAMAAAADAAAAAAADAAMAAAACAAAAAAACAAMAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAABAAIAAAAAAAQAAAACAAIAAAABAAQAAAD8//7/AAAEAAYAAAD8/wAAAAAEAAAAAAD9//7/AAAFAAYAAAD9/wAAAAAFAAAAAAD+//7/AAAGAAYAAAD+/wAAAAAFAAAAAAD//wAAAAAFAAAAAAAAAP//AAACAAQAAAAAAAAAAAAGAAAAAAABAP//AAACAAAAAAACAP//AAADAAQAAAAEAAEAAAAEAAYAAAAFAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAA=")
 tile_set = SubResource("TileSet_ys2th")
 
+[node name="DeathLine" type="Area2D" parent="."]
+position = Vector2(102, 28)
+scale = Vector2(1.08071, 2.19111)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathLine"]
+position = Vector2(6.47724, 35.142)
+scale = Vector2(253.688, 0.378592)
+shape = SubResource("WorldBoundaryShape2D_1dgru")
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.225, 0.225)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(101, 12)
+position = Vector2(101, 16)
 scale = Vector2(0.72, 0.28)
 texture = ExtResource("3_5saiw")
 
@@ -289,15 +300,6 @@ motion_scale = Vector2(0.78, 0.78)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
 position = Vector2(135, -104)
 texture = ExtResource("5_g2qav")
-
-[node name="DeathLine" type="Area2D" parent="."]
-position = Vector2(102, 28)
-scale = Vector2(1.08071, 2.19111)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathLine"]
-position = Vector2(6.47724, 35.142)
-scale = Vector2(253.688, 0.378592)
-shape = SubResource("RectangleShape2D_3d5yy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(1.207, 1.207)
