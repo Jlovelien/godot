@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://d02gy236n4qav"]
+[gd_scene load_steps=10 format=4 uid="uid://d02gy236n4qav"]
 
 [ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/player.tscn" id="1_1dgru"]
-[ext_resource type="PackedScene" uid="uid://c8wks33ieau2u" path="res://scenes/shootLight.tscn" id="2_5saiw"]
 [ext_resource type="Texture2D" uid="uid://ctg8dnmvujdau" path="res://assets/tilemap.png" id="2_6gmyu"]
 [ext_resource type="Texture2D" uid="uid://bqjvvk35ex5uk" path="res://assets/blue_land.png" id="3_5saiw"]
 [ext_resource type="Texture2D" uid="uid://dix7hekigmub" path="res://assets/background_cloudB.png" id="4_otl2l"]
@@ -137,9 +136,9 @@ texture_region_size = Vector2i(18, 18)
 15:3/0 = 0
 15:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 0:4/0 = 0
-0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 9, -7, 5, -7, -1.5, -3, -4, 3, -4, 7, -1, 7, 9)
 1:4/0 = 0
-1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7, 9, -7, -2, -4, -4, 4, -4, 7, -2, 7, 9)
 2:4/0 = 0
 2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(9, -9, 9, 9, -9, 9)
 3:4/0 = 0
@@ -209,11 +208,11 @@ texture_region_size = Vector2i(18, 18)
 3:6/0 = 0
 3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 4:6/0 = 0
-4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(9, -9, -5.4, -9, -9, -5.4, -9, 5.4, -5.4, 9, 9, 9)
 5:6/0 = 0
 5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 6:6/0 = 0
-6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
+6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 5.4, -9, 9, -5.4, 9, 5.4, 5.4, 9, -9, 9)
 7:6/0 = 0
 7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 8:6/0 = 0
@@ -256,17 +255,15 @@ pattern_0 = SubResource("TileMapPattern_uchep")
 [node name="lightBoy" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_1dgru")]
-position = Vector2(94, -44)
+position = Vector2(0, 46)
 scale = Vector2(0.12202, 0.12202)
 up_direction = Vector2(0, -1)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(5, 5)
-
-[node name="shootLight" parent="Player" instance=ExtResource("2_5saiw")]
+[node name="lightSpawn" type="Marker2D" parent="Player"]
+gizmo_extents = 64.0
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD9/wAAAAABAAAAAAD+/wAAAAACAAAAAAD//wAAAAACAAAAAAAAAAAAAAACAAAAAAABAAAAAAACAAAAAAACAAAAAAACAAAAAAADAAAAAAACAAAAAAAEAAAAAAACAAAAAAAFAAAAAAACAAAAAAAGAAAAAAADAAAAAAAFAP7/AAAEAAAAAAAGAP7/AAAFAAAAAAAHAP7/AAAFAAAAAAAIAP7/AAAFAAAAAAAJAP7/AAAGAAAAAAABAP//AAAAAAQAAAACAP//AAABAAQAAAAFAPz/AAAEAAYAAAAGAPz/AAAFAAYAAAAHAPz/AAAGAAYAAAD///3/AAAEAAYAAAAAAP3/AAAFAAYAAAABAP3/AAAGAAYAAAAJAP3/AAACAAQAAAAKAP3/AAACAAAAAAALAP3/AAADAAQAAAA=")
+tile_map_data = PackedByteArray("AAD5/wMAAAABAAAAAAD6/wMAAAACAAAAAAD7/wMAAAACAAAAAAD8/wMAAAACAAAAAAD9/wMAAAACAAAAAAD+/wMAAAACAAAAAAD//wMAAAACAAAAAAAAAAMAAAACAAAAAAABAAMAAAACAAAAAAAGAAMAAAADAAAAAAADAAMAAAACAAAAAAACAAMAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAABAAIAAAAAAAQAAAACAAIAAAABAAQAAAD8//7/AAAEAAYAAAD8/wAAAAAEAAAAAAD9//7/AAAFAAYAAAD9/wAAAAAFAAAAAAD+//7/AAAGAAYAAAD+/wAAAAAFAAAAAAD//wAAAAAFAAAAAAAAAP//AAACAAQAAAAAAAAAAAAGAAAAAAABAP//AAACAAAAAAACAP//AAADAAQAAAAEAAEAAAAEAAYAAAAFAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAA=")
 tile_set = SubResource("TileSet_ys2th")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -301,5 +298,9 @@ scale = Vector2(1.08071, 2.19111)
 position = Vector2(6.47724, 35.142)
 scale = Vector2(253.688, 0.378592)
 shape = SubResource("RectangleShape2D_3d5yy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(1.207, 1.207)
+zoom = Vector2(5, 5)
 
 [connection signal="body_entered" from="DeathLine" to="Player" method="_on_area_2d_body_entered"]
