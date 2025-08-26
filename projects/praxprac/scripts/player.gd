@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-
+const RIGHT_STICK_X = 2
+const RIGHT_STICK_Y = 3
 const SPEED = 120.0
 const JUMP_VELOCITY = -350.0
 @onready var anim: AnimatedSprite2D = $Anim2D
@@ -12,21 +13,26 @@ var facing := 1
 @export var default_spawn_offset := 24.0
 var _spawn_offset_x := 0.0
 
+func _get_aim_direction() -> Vector2:
+	var rx = Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left")
+	var ry = Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+	var dir = Vector2(rx, ry)
+	if dir.length() > 0.01:
+		return dir.normalized()
+	# Final fallback (no input)
+	return Vector2(facing, 0)
+
 func _physics_process(delta: float) -> void:
 
 	# light shooting
-	if Input.is_action_just_pressed("shoot") and _can_shoot:
+	if Input.is_action_pressed("shoot") and _can_shoot:
 		if projectile_scene != null and spawn_point != null:
-			_can_shoot = false
 			var p = projectile_scene.instantiate()
 			p.global_position = spawn_point.global_position
 			# Add immediately so the projectile's get_tree() is valid when set_direction runs
 			get_tree().current_scene.add_child(p)
 			if p.has_method("set_direction"):
-				p.set_direction(Vector2(facing, 0))
-			# cooldown
-			await get_tree().create_timer(shoot_cooldown).timeout
-			_can_shoot = true
+				p.set_direction(_get_aim_direction())
 			
 	# Add the gravity.
 	if not is_on_floor():
