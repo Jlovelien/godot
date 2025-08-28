@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8wks33ieau2u"]
+
+[ext_resource type="Script" uid="uid://cmgqq5age67ta" path="res://scripts/shoot_light.gd" id="1_147fl"]
+[ext_resource type="Texture2D" uid="uid://c5k1lfbdy6h6n" path="res://assets/laserBlue09.png" id="3_mb8c7"]
+[ext_resource type="Texture2D" uid="uid://daei76nj6puqr" path="res://assets/laserBlue03.png" id="3_upram"]
+[ext_resource type="Texture2D" uid="uid://b14xkoe21sdli" path="res://assets/laserBlue08.png" id="4_16dw5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_16dw5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_upram")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mb8c7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_16dw5")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 2.0
+}]
+
+[node name="shootLight" type="Node2D"]
+script = ExtResource("1_147fl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(9.53674e-07, -2.84217e-14)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_16dw5")
+autoplay = "default"
