@@ -1,20 +1,14 @@
-[gd_scene load_steps=10 format=4 uid="uid://d02gy236n4qav"]
+[gd_scene load_steps=7 format=3 uid="uid://ct3v131dlgmuj"]
 
-[ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/player.tscn" id="1_1dgru"]
-[ext_resource type="Texture2D" uid="uid://ctg8dnmvujdau" path="res://assets/tilemap.png" id="2_6gmyu"]
-[ext_resource type="Texture2D" uid="uid://bqjvvk35ex5uk" path="res://assets/blue_land.png" id="3_5saiw"]
-[ext_resource type="Texture2D" uid="uid://dix7hekigmub" path="res://assets/background_cloudB.png" id="4_otl2l"]
-[ext_resource type="Texture2D" uid="uid://c411bfljow5q4" path="res://assets/background_cloudA.png" id="5_g2qav"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1dgru"]
-normal = Vector2(-3.53174e-09, -1)
-distance = 1.20546
+[ext_resource type="Texture2D" uid="uid://bepetm78aw85u" path="res://assets/Gray.png" id="1_r65e1"]
+[ext_resource type="Texture2D" uid="uid://ctg8dnmvujdau" path="res://assets/tilemap.png" id="2_73c7l"]
+[ext_resource type="PackedScene" uid="uid://c126ngx2plml" path="res://scenes/player.tscn" id="3_73c7l"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uchep"]
 tile_data = PackedInt32Array(0, 262144, 6, 1, 327680, 6, 2, 393216, 6)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1dgru"]
-texture = ExtResource("2_6gmyu")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xlpdl"]
+texture = ExtResource("2_73c7l")
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(18, 18)
 0:0/0 = 0
@@ -38,7 +32,6 @@ texture_region_size = Vector2i(18, 18)
 12:0/0 = 0
 12:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 13:0/0 = 0
-13:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 14:0/0 = 0
 14:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 15:0/0 = 0
@@ -70,7 +63,6 @@ texture_region_size = Vector2i(18, 18)
 12:1/0 = 0
 12:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 13:1/0 = 0
-13:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 14:1/0 = 0
 14:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 15:1/0 = 0
@@ -102,7 +94,6 @@ texture_region_size = Vector2i(18, 18)
 12:2/0 = 0
 12:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 13:2/0 = 0
-13:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 14:2/0 = 0
 14:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 15:2/0 = 0
@@ -248,63 +239,33 @@ texture_region_size = Vector2i(18, 18)
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9, 9, -9, 9, 9, -9, 9)
 3:0/1 = 1
 
-[sub_resource type="TileSet" id="TileSet_ys2th"]
+[sub_resource type="TileSet" id="TileSet_a2vss"]
 tile_size = Vector2i(18, 18)
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_1dgru")
+sources/0 = SubResource("TileSetAtlasSource_xlpdl")
 pattern_0 = SubResource("TileMapPattern_uchep")
 
-[node name="lightBoy" type="Node2D"]
+[node name="outdoorLvls" type="TileMapLayer"]
 
-[node name="Player" parent="." instance=ExtResource("1_1dgru")]
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -456.0
+offset_top = -233.0
+offset_right = 437.0
+offset_bottom = 246.0
+texture = ExtResource("1_r65e1")
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_a2vss")
+
+[node name="Player" parent="." instance=ExtResource("3_73c7l")]
 position = Vector2(0, 46)
 scale = Vector2(0.12202, 0.12202)
 up_direction = Vector2(0, -1)
 
 [node name="lightSpawn" type="Marker2D" parent="Player"]
 gizmo_extents = 64.0
-
-[node name="DeathLine" type="Area2D" parent="."]
-position = Vector2(102, 28)
-scale = Vector2(1.08071, 2.19111)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathLine"]
-position = Vector2(6.47724, 35.142)
-scale = Vector2(253.688, 0.378592)
-shape = SubResource("WorldBoundaryShape2D_1dgru")
-
-[node name="testParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="testParallaxBackground"]
-motion_scale = Vector2(0.225, 0.225)
-
-[node name="Sprite2D" type="Sprite2D" parent="testParallaxBackground/ParallaxLayer"]
-position = Vector2(101, 16)
-scale = Vector2(0.72, 0.28)
-texture = ExtResource("3_5saiw")
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="testParallaxBackground"]
-
-[node name="Sprite2D" type="Sprite2D" parent="testParallaxBackground/ParallaxLayer2"]
-position = Vector2(-21, -104)
-texture = ExtResource("4_otl2l")
-
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="testParallaxBackground"]
-position = Vector2(0, 2)
-motion_scale = Vector2(0.78, 0.78)
-
-[node name="Sprite2D" type="Sprite2D" parent="testParallaxBackground/ParallaxLayer3"]
-position = Vector2(135, -104)
-texture = ExtResource("5_g2qav")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(1.207, 1.207)
-zoom = Vector2(5, 5)
-
-[node name="layerHolder" type="Node2D" parent="."]
-
-[node name="TileMapLayer" type="TileMapLayer" parent="layerHolder"]
-tile_map_data = PackedByteArray("AAD5/wMAAAABAAAAAAD6/wMAAAACAAAAAAD7/wMAAAACAAAAAAD8/wMAAAACAAAAAAD9/wMAAAACAAAAAAD+/wMAAAACAAAAAAD//wMAAAACAAAAAAAAAAMAAAACAAAAAAABAAMAAAACAAAAAAAGAAMAAAADAAAAAAADAAMAAAACAAAAAAACAAMAAAACAAAAAAAEAAMAAAACAAAAAAAFAAMAAAACAAAAAAABAAIAAAAAAAQAAAACAAIAAAABAAQAAAD8//7/AAAEAAYAAAD8/wAAAAAEAAAAAAD9//7/AAAFAAYAAAD9/wAAAAAFAAAAAAD+//7/AAAGAAYAAAD+/wAAAAAFAAAAAAD//wAAAAAFAAAAAAAAAP//AAACAAQAAAAAAAAAAAAGAAAAAAABAP//AAACAAAAAAACAP//AAADAAQAAAAEAAEAAAAEAAYAAAAFAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAA=")
-tile_set = SubResource("TileSet_ys2th")
-
-[connection signal="body_entered" from="DeathLine" to="Player" method="_on_area_2d_body_entered"]
