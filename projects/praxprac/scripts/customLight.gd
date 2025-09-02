@@ -25,11 +25,7 @@ func _process(_delta):
 		if result.size() > 0:   # means something was hit
 			var collider = result["collider"]
 			var hit_pos = result["position"]
-
-			#print("Hit:", collider.name, " Groups:", collider.get_groups())
-
 			if collider.is_in_group("lens"):
-				print("Lens hit!")
 				rays.append([global_position, endpoint,"GREEN"])
 			# endpoint = handle_lens_interaction(hit_pos, dir)
 			else:
@@ -38,10 +34,6 @@ func _process(_delta):
 		else:
 			endpoint = global_position + dir * radius
 			rays.append([global_position, endpoint,color])
-	print(rays)
-	print("______")
-	
-	
 	queue_redraw()
 func _draw():
 	for ray in rays:

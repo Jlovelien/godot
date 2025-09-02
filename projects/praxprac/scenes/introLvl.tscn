@@ -17,7 +17,7 @@ position = Vector2(-240, 134)
 [node name="customLight" type="Node2D" parent="." index="4"]
 position = Vector2(341, -180)
 script = ExtResource("2_u6fla")
-num_rays = 64
+num_rays = 319
 radius = 513.0
 direction = 2.27
 
