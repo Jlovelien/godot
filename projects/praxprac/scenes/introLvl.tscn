@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=6 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
+[ext_resource type="Script" uid="uid://6p5u3meqegcj" path="res://scenes/ConvexLens.gd" id="3_d5yn2"]
+[ext_resource type="Script" uid="uid://cjqsw28nn6sx7" path="res://scenes/AreaLens.gd" id="4_uts5u"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
 [node name="introLvl" instance=ExtResource("1_2loah")]
 
@@ -18,14 +22,35 @@ position = Vector2(-240, 134)
 position = Vector2(341, -180)
 script = ExtResource("2_u6fla")
 num_rays = 319
-radius = 513.0
+radius = 999.0
+spread = 1.95
 direction = 2.27
 
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="5" groups=["lens"]]
+position = Vector2(-118, -54)
+script = ExtResource("3_d5yn2")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
 position = Vector2(185.312, -30.5625)
-scale = Vector2(5.17373, 2.77452)
+rotation = 0.849813
+scale = Vector2(2.98799, 2.40135)
 polygon = PackedVector2Array(-8.27733, -2.02738, -6.73736, 0.337896, -4.42741, 1.35159, 0.192501, 1.35159, 5.77489, 1.35159, 7.50735, 0.675793, 9.43232, -2.02738)
+
+[node name="Area2D" type="Area2D" parent="." index="6"]
+position = Vector2(-58, 81)
+script = ExtResource("4_uts5u")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
+material = SubResource("CanvasItemMaterial_uts5u")
+position = Vector2(185.312, -30.5625)
+scale = Vector2(5.17373, 2.77452)
+polygon = PackedVector2Array(-8.27733, -2.02738, -6.73736, 0.337896, -4.42741, 1.35159, 0.192501, 1.35159, 5.77489, 1.35159, 7.50735, 0.675793, 9.43232, -2.02738, 1.9196, -2.02738)
+
+[node name="Label" type="Label" parent="." index="7"]
+offset_left = 186.0
+offset_top = 36.0
+offset_right = 284.0
+offset_bottom = 59.0
+text = "<- Drag me :)"
