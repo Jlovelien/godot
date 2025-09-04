@@ -29,7 +29,7 @@ direction = 2.27
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="5" groups=["lens"]]
-position = Vector2(-118, -54)
+position = Vector2(-268, -98)
 script = ExtResource("3_d5yn2")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0"]
@@ -39,14 +39,16 @@ scale = Vector2(2.98799, 2.40135)
 polygon = PackedVector2Array(-8.27733, -2.02738, -6.73736, 0.337896, -4.42741, 1.35159, 0.192501, 1.35159, 5.77489, 1.35159, 7.50735, 0.675793, 9.43232, -2.02738)
 
 [node name="Area2D" type="Area2D" parent="." index="6"]
-position = Vector2(-58, 81)
+position = Vector2(441, -133)
+rotation = -9.40247
 script = ExtResource("4_uts5u")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" index="0"]
 material = SubResource("CanvasItemMaterial_uts5u")
-position = Vector2(185.312, -30.5625)
-scale = Vector2(5.17373, 2.77452)
-polygon = PackedVector2Array(-8.27733, -2.02738, -6.73736, 0.337896, -4.42741, 1.35159, 0.192501, 1.35159, 5.77489, 1.35159, 7.50735, 0.675793, 9.43232, -2.02738, 1.9196, -2.02738)
+position = Vector2(251.706, -105.641)
+rotation = -0.0158349
+scale = Vector2(5.03752, 2.77452)
+polygon = PackedVector2Array(-9.54628, -4.93384, -9.12871, 0.828138, -6.74664, 0.800145, 0.00257111, 0.72083, 4.56821, 0.667175, 8.33983, 0.622851, 8.715, -5.50887, -0.416279, -5.40156)
 
 [node name="Label" type="Label" parent="." index="7"]
 offset_left = 186.0
