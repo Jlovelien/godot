@@ -30,16 +30,16 @@ direction = 2.59
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
 [node name="convexLens" type="Area2D" parent="." index="5"]
-position = Vector2(185, -27)
+position = Vector2(188, -28)
 rotation = -9.40247
 script = ExtResource("4_uts5u")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="convexLens" index="0"]
 material = SubResource("CanvasItemMaterial_uts5u")
-position = Vector2(0.133884, 5.99851)
+position = Vector2(-0.696511, 6.01166)
 rotation = -0.0158349
-scale = Vector2(5.03752, 2.77452)
-polygon = PackedVector2Array(-9.148, -4.57807, -9.13, 0.46774, 8.14132, 0.278766, 8.12209, -4.78105)
+scale = Vector2(5.21845, 2.77452)
+polygon = PackedVector2Array(-5.95905, -1.01125, -9.13, 0.46774, 8.14132, 0.278766, 5.1573, -1.14191)
 
 [node name="focalMark" type="Marker2D" parent="convexLens" index="1"]
 position = Vector2(253.639, -108.685)
