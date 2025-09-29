@@ -2,12 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
-[ext_resource type="Script" uid="uid://bpyy88vn6f35v" path="res://scripts/focalMark.gd" id="4_hfasc"]
-[ext_resource type="Script" uid="uid://cjqsw28nn6sx7" path="res://scenes/AreaLens.gd" id="4_uts5u"]
+[ext_resource type="Script" uid="uid://cjqsw28nn6sx7" path="res://scripts/AreaLens.gd" id="4_uts5u"]
+[ext_resource type="Texture2D" uid="uid://d3nrnkvpk6r2" path="res://assets/icon_plusLarge.png" id="5_hfasc"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
 [node name="introLvl" instance=ExtResource("1_2loah")]
+rotation = 0.000349177
 
 [node name="TextureRect" parent="." index="0"]
 visible = false
@@ -30,17 +31,23 @@ direction = 2.59
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
 [node name="convexLens" type="Area2D" parent="." index="5"]
-position = Vector2(188, -28)
-rotation = -9.40247
+position = Vector2(185.988, -33.0649)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("4_uts5u")
+focal_offset = Vector2(0, 100)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="convexLens" index="0"]
 material = SubResource("CanvasItemMaterial_uts5u")
-position = Vector2(-0.696511, 6.01166)
-rotation = -0.0158349
-scale = Vector2(5.21845, 2.77452)
-polygon = PackedVector2Array(-5.95905, -1.01125, -9.13, 0.46774, 8.14132, 0.278766, 5.1573, -1.14191)
+position = Vector2(3.00067, 1.99895)
+scale = Vector2(5.23329, 2.77454)
+polygon = PackedVector2Array(8.21649, -0.726254, 6.30578, -0.00415611, 2.86633, 0.358528, -0.573189, 0.360794, -3.82162, 0.362934, -6.87904, 0.00452995, -9.55435, -0.714546, -6.87931, -1.43715, -3.82203, -1.79958, -0.573589, -1.80172, 2.86593, -1.80399, 6.30552, -1.44584)
 
-[node name="focalMark" type="Marker2D" parent="convexLens" index="1"]
-position = Vector2(253.639, -108.685)
-script = ExtResource("4_hfasc")
+[node name="focalMark" type="Marker2D" parent="convexLens/CollisionPolygon2D" index="0"]
+position = Vector2(-0.573, 50)
+scale = Vector2(0.191084, 0.36042)
+gizmo_extents = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="convexLens" index="1"]
+scale = Vector2(1.95507, -0.140001)
+texture = ExtResource("5_hfasc")

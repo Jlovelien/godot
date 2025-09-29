@@ -5,8 +5,9 @@ var rotating := false
 var drag_offset: Vector2
 var rotation_offset := 0.0
 
-@onready var focalMark: Marker2D = $focalMark
+@onready var focalMark: Marker2D = $CollisionPolygon2D/focalMark
 @export var focal_offset: Vector2 = Vector2(0, 200) # relative focal point
+
 var focalPoint
 @onready var focalLight := preload("res://scenes/convexLight.tscn")
 var fl = AnimatedSprite2D.new()
@@ -17,9 +18,68 @@ const EPS = 1e-4
 
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
+@onready var light_pos = $"../customLight".position
+
+#Debugging lens direction
+@export var debug_draw: bool = true
+@export var debug_line_width: float = 2.0
+
+var _dbg_lines: Array = []   # each: {a:Vector2, b:Vector2, color:Color, w:float}
+var _dbg_points: Array = []  # each: {p:Vector2, r:float, color:Color}
+
 #Prepping for how focal point is computed
 var focal_positions: Array = []
 var side_dirs: Array = []
+
+#functions for debugging
+func _dbg_add_line(a: Vector2, b: Vector2, color: Color, w: float = debug_line_width) -> void:
+	if not debug_draw: return
+	_dbg_lines.append({"a": a, "b": b, "color": color, "w": w})
+
+func _dbg_add_point(p: Vector2, r: float = 4.0, color: Color = Color(1, 0, 0)) -> void:
+	if not debug_draw: return
+	_dbg_points.append({"p": p, "r": r, "color": color})
+
+func _draw() -> void:
+	if not debug_draw: return
+	# Convert global → local so CanvasItem drawing is correct.
+	for seg in _dbg_lines:
+		var a := to_local(seg.a)
+		var b := to_local(seg.b)
+		draw_line(a, b, seg.color, seg.w, true)
+	for dot in _dbg_points:
+		draw_circle(to_local(dot.p), dot.r, dot.color)
+#End debug
+
+func lightDirection(light_pos: Vector2, globalPoint: Vector2, poly: CollisionPolygon2D, mask := 0xFFFFFFFF) -> bool:
+	var space := poly.get_world_2d().direct_space_state
+	var params := PhysicsRayQueryParameters2D.create(light_pos, globalPoint)
+	params.collision_mask = mask
+	params.collide_with_areas = true
+	params.collide_with_bodies = true
+
+	# Base intent line (light → target), will recolor/overlay after raycast
+	_dbg_add_line(light_pos, globalPoint, Color(1, 1, 1, 0.25))
+	
+	# ✅ NEW: draw the intended target (globalPoint) as a blue marker
+	_dbg_add_point(globalPoint, 5.0, Color(0.2, 0.6, 1.0))
+
+	var lightHit := space.intersect_ray(params)
+
+	if lightHit.is_empty():
+		# Clear path
+		_dbg_add_line(light_pos, globalPoint, Color(0.1, 1.0, 0.1, 0.9)) # green
+		return true
+
+	# Blocked: draw red up to the hit, gray after
+	var hit_pos: Vector2 = lightHit.position
+	_dbg_add_line(light_pos, hit_pos, Color(1.0, 0.2, 0.2, 0.95))       # red to first hit
+	_dbg_add_line(hit_pos, globalPoint, Color(0.7, 0.7, 0.7, 0.6))      # gray from hit → target
+	_dbg_add_point(hit_pos, 4.0, Color(1, 0.2, 0.2))                    # hit marker
+
+	var d_hit_sq := light_pos.distance_squared_to(hit_pos)
+	var d_point_sq := light_pos.distance_squared_to(globalPoint)
+	return d_point_sq <= d_hit_sq + 1e-6
 
 func _ready():
 	var visual_polygon = Polygon2D.new()
@@ -30,6 +90,7 @@ func _ready():
 	visual_polygon.scale = collision_polygon.scale
 	visual_polygon.z_index = 1
 	input_pickable = true
+	
 
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -51,6 +112,7 @@ func _input_event(viewport, event, shape_idx):
 			rotating = false
 
 func _process(_delta):
+
 	# Allow switching modes mid-drag by pressing/releasing Shift
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		var shift_down := Input.is_key_pressed(KEY_SHIFT)
@@ -65,6 +127,12 @@ func _process(_delta):
 			rotating = false
 			dragging = true
 			drag_offset = global_position - get_global_mouse_position()
+	# --- DEBUG: clear last frame ---
+	_dbg_lines.clear()
+	_dbg_points.clear()
+	queue_redraw()
+	# --------------------------------
+	# (rest of your _process stays the same)
 
 	# Apply motion
 	if dragging:
@@ -109,7 +177,8 @@ func colCount(result):
 func lensActive(rayNum):
 	if rayNum >= rayCount and fl.get_parent() == null:
 		focalMark.add_child(fl)
-		fl.position = Vector2(0, 55)
+		if (lightDirection(light_pos, fl.global_position, collision_polygon) == true):
+			focalMark.position.y = -focalMark.position.y
 		fl.sprite_frames = preload("res://assets/animations/convexLight.tres")
 		fl.play("convexLight")
 	elif rayNum < rayCount and fl.get_parent() == focalMark:
@@ -122,7 +191,7 @@ func _cross(a: Vector2, b: Vector2) -> float:
 func noSolid(center: Vector2, focal_pos: Vector2) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(center, focal_pos)
 	query.exclude = [self]
-	query.collision_mask = 1 << 0
+	query.collision_mask = 1 << 1
 	var result = get_world_2d().direct_space_state.intersect_ray(query)
 	return result.is_empty()
 
@@ -138,22 +207,13 @@ func _ray_segment_intersection(ray_o: Vector2, ray_dir: Vector2, a: Vector2, b: 
 		return {"pos": ray_o + ray_dir * t, "t": t, "u": u}
 	return {}
 
-func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2) -> Dictionary:
-	var center: Vector2 = global_position
-	var center_to_hit: Vector2 = hit_pos - center
-	var side_dir: Vector2
-	if center_to_hit.length() < EPS:
-		side_dir = (-incoming_dir).normalized()
-	else:
-		side_dir = center_to_hit.normalized()
-	var exit_dir: Vector2 = -side_dir
-	var focal_distance: float = focal_offset.length()
-	var focal_pos: Vector2 = center + exit_dir * focal_distance
-	if noSolid(center, focal_pos):
-		focal_positions.append(focal_pos)
-		side_dirs.append(side_dir)
+func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, rayIdx: int) -> Dictionary:
+	print(incoming_dir.angle())
+	print((focalMark.global_position- hit_pos).angle())
+
 	return {
 		"start": hit_pos,
-		"end": focal_pos,
+		"end": focalMark.global_position,
 		"color": Color(0.3, 0.7, 1)
+		
 	}
