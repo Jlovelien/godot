@@ -6,6 +6,7 @@ var drag_offset: Vector2
 var rotation_offset := 0.0
 
 @onready var focalMark: Marker2D = $CollisionPolygon2D/focalMark
+@onready var polySide: Marker2D = $CollisionPolygon2D/focalMark2
 @export var focal_offset: Vector2 = Vector2(0, 200) # relative focal point
 
 var focalPoint
@@ -31,6 +32,10 @@ var _dbg_points: Array = []  # each: {p:Vector2, r:float, color:Color}
 var focal_positions: Array = []
 var side_dirs: Array = []
 
+#Light direction vars
+@onready var redLight = focalMark.position.y
+@onready var greenLight = -focalMark.position.y
+
 #functions for debugging
 func _dbg_add_line(a: Vector2, b: Vector2, color: Color, w: float = debug_line_width) -> void:
 	if not debug_draw: return
@@ -51,10 +56,11 @@ func _draw() -> void:
 		draw_circle(to_local(dot.p), dot.r, dot.color)
 #End debug
 
-func lightDirection(light_pos: Vector2, globalPoint: Vector2, poly: CollisionPolygon2D, mask := 0xFFFFFFFF) -> bool:
+func lightDirection(light_pos: Vector2, globalPoint: Vector2, poly: CollisionPolygon2D, mask := 0b00010010) -> bool:
+	
 	var space := poly.get_world_2d().direct_space_state
 	var params := PhysicsRayQueryParameters2D.create(light_pos, globalPoint)
-	params.collision_mask = mask
+	params.collision_mask = 0b00010010
 	params.collide_with_areas = true
 	params.collide_with_bodies = true
 
@@ -122,6 +128,8 @@ func _process(_delta):
 			rotating = true
 			var mouse_angle := (get_global_mouse_position() - global_position).angle()
 			rotation_offset = global_rotation - mouse_angle
+			
+			
 		elif (not shift_down) and rotating:
 			# switch back to translate
 			rotating = false
@@ -130,6 +138,10 @@ func _process(_delta):
 	# --- DEBUG: clear last frame ---
 	_dbg_lines.clear()
 	_dbg_points.clear()
+	if (lightDirection(light_pos, polySide.global_position, collision_polygon) == true):
+		focalMark.position.y = greenLight
+	else:
+		focalMark.position.y = redLight
 	queue_redraw()
 	# --------------------------------
 	# (rest of your _process stays the same)
@@ -177,8 +189,7 @@ func colCount(result):
 func lensActive(rayNum):
 	if rayNum >= rayCount and fl.get_parent() == null:
 		focalMark.add_child(fl)
-		if (lightDirection(light_pos, fl.global_position, collision_polygon) == true):
-			focalMark.position.y = -focalMark.position.y
+	
 		fl.sprite_frames = preload("res://assets/animations/convexLight.tres")
 		fl.play("convexLight")
 	elif rayNum < rayCount and fl.get_parent() == focalMark:
@@ -208,8 +219,6 @@ func _ray_segment_intersection(ray_o: Vector2, ray_dir: Vector2, a: Vector2, b: 
 	return {}
 
 func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, rayIdx: int) -> Dictionary:
-	print(incoming_dir.angle())
-	print((focalMark.global_position- hit_pos).angle())
 
 	return {
 		"start": hit_pos,

@@ -51,7 +51,7 @@ func _process(_delta):
 			#ChrisNote: This function doesn't do *anything* until it hits a collider (i.e., *any object*)
 			#and that collider needs to have "interact_with_ray" in it somewhere.
 			if collider != null and collider.has_method("interact_with_ray"):
-				var ray_data = collider.interact_with_ray(hit_pos, dir,i)
+				var ray_data = collider.interact_with_ray(hit_pos, dir, i, angle)
 				if ray_data:
 					# if the object provided a start & end (preferred), add two segments:
 					if ray_data.has("start") and ray_data.has("end"):
