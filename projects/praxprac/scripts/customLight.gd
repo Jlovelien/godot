@@ -35,6 +35,13 @@ func _process(_delta):
 			var collider = result.get("collider")
 			var hit_pos: Vector2 = result.get("position")
 			
+			# NEW: front-side mirror hit?
+			if collider == self and collider.has_method("interact_with_ray"):
+				var out = collider.interact_with_ray(hit_pos, -dir, i, angle)
+				if out.has("end"):
+					rays.append([hit_pos, out.end, out.color])
+					continue    # skip the default append below
+			
 			# default: incoming ray ends at the hit
 			endpoint = hit_pos
 			color = Color.RED
