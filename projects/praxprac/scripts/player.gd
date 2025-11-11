@@ -65,17 +65,17 @@ func _physics_process(delta: float) -> void:
 	if spawn_point != null:
 		spawn_point.position = Vector2(_spawn_offset_x * facing, spawn_point.position.y)
 
-func _play_loop(name: String) -> void:
-	if anim.animation != name or not anim.is_playing():
-		anim.play(name)
+func _play_loop(loopName: String) -> void:
+	if anim.animation != loopName or not anim.is_playing():
+		anim.play(loopName)
 
-func _play_once(name: String) -> void:
-	if anim.animation != name or not anim.is_playing():
-		anim.play(name)  # if your "jump" is non-looping in the SpriteFrames, this will play once
+func _play_once(onceName: String) -> void:
+	if anim.animation != onceName or not anim.is_playing():
+		anim.play(onceName)  # if your "jump" is non-looping in the SpriteFrames, this will play once
 
-# Death border trigger
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	get_tree().reload_current_scene()
+## Death border trigger
+#func _on_area_2d_body_entered(body: Node2D) -> void:
+	#get_tree().reload_current_scene()
 
 func _ready() -> void:
 	# capture default spawn offset for flipping

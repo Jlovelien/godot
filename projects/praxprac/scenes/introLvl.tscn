@@ -62,7 +62,7 @@ texture = ExtResource("5_hfasc")
 
 [node name="mirror" type="StaticBody2D" parent="." index="6"]
 position = Vector2(-122.007, -20.9574)
-rotation = -6.36792
+rotation = -3.48569
 script = ExtResource("6_3oy1g")
 
 [node name="Sprite2D" type="Sprite2D" parent="mirror" index="0"]
@@ -74,6 +74,6 @@ texture = ExtResource("5_ll781")
 position = Vector2(-12.9979, 6.00454)
 polygon = PackedVector2Array(19.0042, 11.9934, 12.0049, 13.9958, 8.00419, 11.9972, 3.00314, 8.99895, -0.998254, 5.00035, -2.99965, 1.00105, -4.0014, -3.9986, -4.00314, -8.9986, -4.00489, -13.9986, -1.00768, -21.9997)
 
-[node name="Marker2D" type="Marker2D" parent="mirror/CollisionPolygon2D" index="0"]
+[node name="mirrorMark" type="Marker2D" parent="mirror/CollisionPolygon2D" index="0"]
 position = Vector2(12.9981, -6.00464)
 rotation = 0.280737

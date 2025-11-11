@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-@onready var mirrorSide: Marker2D = $CollisionPolygon2D/focalMark
+@onready var mirrorSide: Marker2D = $CollisionPolygon2D/mirrorMark
 @onready var light_pos = $"../customLight".position
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
@@ -13,7 +13,7 @@ func _process(_delta):
 		self.rotation_degrees -= 90
 
 #TODO calculate mirror angle
-func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, _idx: int, angle) -> Dictionary:
+func interact_with_ray(hit_pos: Vector2, _incoming_dir: Vector2, _idx: int, _angle) -> Dictionary:
 	# normal that always sticks out of the reflective face
 	var global_normal := global_transform.x.rotated(2*PI)
 

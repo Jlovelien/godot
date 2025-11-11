@@ -46,13 +46,6 @@ func _process(_delta):
 			endpoint = hit_pos
 			color = Color.RED
 			
-			#TODO: Keep working getting lens position correct
-			#Direction from light source to lens
-			#query.collide_with_areas = true
-			#query.collide_with_bodies = false
-			#var dir_to_hit = (hit_pos - global_position).normalized()
-			#print(dir_to_hit)
-			
 			# This is interesting; this checks the collider to see if it has a funciton with that name
 			# if collider implements interact_with_ray, call it
 			#ChrisNote: This function doesn't do *anything* until it hits a collider (i.e., *any object*)

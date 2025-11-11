@@ -56,16 +56,16 @@ func _draw() -> void:
 		draw_circle(to_local(dot.p), dot.r, dot.color)
 #End debug
 
-func lightDirection(light_pos: Vector2, globalPoint: Vector2, poly: CollisionPolygon2D, mask := 0b00010010) -> bool:
+func lightDirection(inclight_pos: Vector2, globalPoint: Vector2, poly: CollisionPolygon2D, _mask := 0b00010010) -> bool:
 	
 	var space := poly.get_world_2d().direct_space_state
-	var params := PhysicsRayQueryParameters2D.create(light_pos, globalPoint)
+	var params := PhysicsRayQueryParameters2D.create(inclight_pos, globalPoint)
 	params.collision_mask = 0b00010010
 	params.collide_with_areas = true
 	params.collide_with_bodies = true
 
 	# Base intent line (light → target), will recolor/overlay after raycast
-	_dbg_add_line(light_pos, globalPoint, Color(1, 1, 1, 0.25))
+	_dbg_add_line(inclight_pos, globalPoint, Color(1, 1, 1, 0.25))
 	
 	# ✅ NEW: draw the intended target (globalPoint) as a blue marker
 	_dbg_add_point(globalPoint, 5.0, Color(0.2, 0.6, 1.0))
@@ -74,17 +74,17 @@ func lightDirection(light_pos: Vector2, globalPoint: Vector2, poly: CollisionPol
 
 	if lightHit.is_empty():
 		# Clear path
-		_dbg_add_line(light_pos, globalPoint, Color(0.1, 1.0, 0.1, 0.9)) # green
+		_dbg_add_line(inclight_pos, globalPoint, Color(0.1, 1.0, 0.1, 0.9)) # green
 		return true
 
 	# Blocked: draw red up to the hit, gray after
 	var hit_pos: Vector2 = lightHit.position
-	_dbg_add_line(light_pos, hit_pos, Color(1.0, 0.2, 0.2, 0.95))       # red to first hit
+	_dbg_add_line(inclight_pos, hit_pos, Color(1.0, 0.2, 0.2, 0.95))       # red to first hit
 	_dbg_add_line(hit_pos, globalPoint, Color(0.7, 0.7, 0.7, 0.6))      # gray from hit → target
 	_dbg_add_point(hit_pos, 4.0, Color(1, 0.2, 0.2))                    # hit marker
 
-	var d_hit_sq := light_pos.distance_squared_to(hit_pos)
-	var d_point_sq := light_pos.distance_squared_to(globalPoint)
+	var d_hit_sq := inclight_pos.distance_squared_to(hit_pos)
+	var d_point_sq := inclight_pos.distance_squared_to(globalPoint)
 	return d_point_sq <= d_hit_sq + 1e-6
 
 func _ready():
@@ -98,7 +98,7 @@ func _ready():
 	input_pickable = true
 	
 
-func _input_event(viewport, event, shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# Decide whether this is a drag or a rotation based on Shift
@@ -218,7 +218,7 @@ func _ray_segment_intersection(ray_o: Vector2, ray_dir: Vector2, a: Vector2, b: 
 		return {"pos": ray_o + ray_dir * t, "t": t, "u": u}
 	return {}
 
-func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, rayIdx: int, angle: float) -> Dictionary:
+func interact_with_ray(hit_pos: Vector2, _incoming_dir: Vector2, _rayIdx: int, _angle: float) -> Dictionary:
 
 	return {
 		"start": hit_pos,
