@@ -1,29 +1,47 @@
 extends StaticBody2D
 
 @onready var mirrorSide: Marker2D = $CollisionPolygon2D/mirrorMark
-@onready var light_pos = $"../customLight".position
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
-
-func _process(_delta):
-	# Turn mirror 90 degrees right
+func _process(_delta: float) -> void:
+	# Turn mirror 90 degrees right / left
 	if Input.is_action_just_pressed("rotateRight"):
-		self.rotation_degrees += 90
+		rotation_degrees += 90.0
 	if Input.is_action_just_pressed("rotateLeft"):
-		self.rotation_degrees -= 90
+		rotation_degrees -= 90.0
 
-#TODO calculate mirror angle
-func interact_with_ray(hit_pos: Vector2, _incoming_dir: Vector2, _idx: int, _angle) -> Dictionary:
-	# normal that always sticks out of the reflective face
-	var global_normal := global_transform.x.rotated(2*PI)
+# Per-ray logic for a mirror
+func interact_with_ray(
+	hit_pos: Vector2,
+	incoming_dir: Vector2,
+	ray: RayState
+) -> Dictionary:
+	# normal pointing out of the reflective face:
+	# assume mirrorMark is on the reflective side
+	var global_normal: Vector2 = (mirrorSide.global_position - global_position).normalized()
 
-	var in_dir := hit_pos.normalized()
-	# front-side hit?
-	if in_dir.dot(global_normal) >= 0:          # 0° … 90° → back side
-		return {}                               # empty = “pass through”
+	# If dot > 0 → ray moving roughly in same direction as normal = back side.
+	if incoming_dir.dot(global_normal) > 0.0:
+		return {}  # no reflection; ray just dies at hit_pos
 
-	# reflect
-	var reflected_dir := in_dir.bounce(global_normal)
-	return { "start": hit_pos,
-			"end":  hit_pos + reflected_dir * 400.0,
-			"color": Color(0.3, 0.7, 1) }
+	# Reflect the incoming direction around the normal
+	var reflected_dir: Vector2 = incoming_dir.bounce(global_normal).normalized()
+	var segment_length := 400.0    # tweak or export if needed
+
+	return {
+		"segments": [
+			{
+				"start": hit_pos,
+				"end": hit_pos + reflected_dir * segment_length,
+				"color": Color(0.3, 0.7, 1.0)
+			}
+		],
+		"rays": [
+			{
+				"origin": hit_pos,
+				"dir": reflected_dir,
+				"color": Color(0.3, 0.7, 1.0),
+				"offset_depth": 1
+			}
+		]
+	}
