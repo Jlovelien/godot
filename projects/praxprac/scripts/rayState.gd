@@ -7,6 +7,8 @@ var color: Color
 var depth: int
 var idx: int
 var angle: float
+var source_id: int
+var interacted_objects: Array[Object] = []
 
 func _init(
 	origin: Vector2,
@@ -14,7 +16,8 @@ func _init(
 	color: Color,
 	depth: int,
 	idx: int,
-	angle: float
+	angle: float,
+	source_id: int
 ) -> void:
 	self.origin = origin
 	self.dir = dir
@@ -22,3 +25,5 @@ func _init(
 	self.depth = depth
 	self.idx = idx
 	self.angle = angle
+	self.source_id = source_id
+	self.interacted_objects = []

@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=10 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
+[ext_resource type="SpriteFrames" uid="uid://ckmjflhtdrpk5" path="res://assets/animations/convexLight.tres" id="3_3oy1g"]
 [ext_resource type="Script" uid="uid://6p5u3meqegcj" path="res://scripts/convexLens.gd" id="3_ll781"]
 [ext_resource type="Texture2D" uid="uid://d3nrnkvpk6r2" path="res://assets/icon_plusLarge.png" id="5_hfasc"]
 [ext_resource type="Texture2D" uid="uid://c38vk0qm6ki6m" path="res://assets/rank013.png" id="5_ll781"]
 [ext_resource type="Script" uid="uid://bi0up0eta65hk" path="res://scripts/mirrorReflect.gd" id="6_3oy1g"]
+[ext_resource type="Script" uid="uid://1e488qcl6m0f" path="res://scripts/focalManager.gd" id="7_3oy1g"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
@@ -23,6 +25,7 @@ tile_map_data = PackedByteArray("AADy/wgAAAACAAEAAADz/wgAAAACAAEAAAD0/wgAAAACAAE
 position = Vector2(-240, 134)
 
 [node name="customLight" type="Node2D" parent="." index="4" groups=["rays"]]
+visible = false
 position = Vector2(2859, -1733)
 rotation = 1.706
 script = ExtResource("2_u6fla")
@@ -30,10 +33,68 @@ num_rays = 244
 radius = 4074.0
 spread = 0.2
 direction = 2.59
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.0288205, 0.553692, 0.903359, 1), Color(0.556214, 0.000198684, 0.547713, 1), Color(0.657925, 0, 0.175251, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
 
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
-[node name="convexLens" type="Area2D" parent="." index="5"]
+[node name="customLight2" type="Node2D" parent="." index="5" groups=["rays"]]
+visible = false
+position = Vector2(383.031, 87.8663)
+rotation = 1.706
+script = ExtResource("2_u6fla")
+num_rays = 512
+radius = 894.0
+focal_sample_step = 10.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_id = 1
+light_shape = 2
+line_rays = 15
+
+[node name="Line2D" type="Line2D" parent="customLight2" index="0"]
+
+[node name="customLight3" type="Node2D" parent="." index="6" groups=["rays"]]
+position = Vector2(210.926, -213.074)
+rotation = 1.5708
+script = ExtResource("2_u6fla")
+num_rays = 128
+radius = 1635.0
+direction = 1.6
+focal_sample_step = 50.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_id = 1
+light_shape = 1
+line_rays = 15
+
+[node name="Line2D" type="Line2D" parent="customLight3" index="0"]
+
+[node name="customLight4" type="Node2D" parent="." index="7" groups=["rays"]]
+position = Vector2(-84.0744, -212.971)
+rotation = 1.5708
+script = ExtResource("2_u6fla")
+num_rays = 128
+radius = 1635.0
+direction = 1.6
+focal_sample_step = 50.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_id = 1
+light_shape = 1
+line_rays = 15
+
+[node name="Line2D" type="Line2D" parent="customLight4" index="0"]
+
+[node name="convexLens" type="Area2D" parent="." index="8"]
 position = Vector2(-2.00034, -0.999298)
 collision_layer = 2
 collision_mask = 2
@@ -60,7 +121,7 @@ gizmo_extents = 0.0
 scale = Vector2(1.95507, -0.140001)
 texture = ExtResource("5_hfasc")
 
-[node name="mirror" type="StaticBody2D" parent="." index="6"]
+[node name="mirror" type="StaticBody2D" parent="." index="9"]
 position = Vector2(-174.012, -34.9392)
 rotation = -5.11441
 script = ExtResource("6_3oy1g")
@@ -78,7 +139,7 @@ polygon = PackedVector2Array(19.0042, 11.9934, 12.0049, 13.9958, 8.00419, 11.997
 position = Vector2(12.9981, -6.00464)
 rotation = 0.280737
 
-[node name="mirror2" type="StaticBody2D" parent="." index="7"]
+[node name="mirror2" type="StaticBody2D" parent="." index="10"]
 position = Vector2(-164.973, 77.0576)
 rotation = 0.554285
 script = ExtResource("6_3oy1g")
@@ -95,3 +156,32 @@ polygon = PackedVector2Array(19.0042, 11.9934, 12.0049, 13.9958, 8.00419, 11.997
 [node name="mirrorMark" type="Marker2D" parent="mirror2/CollisionPolygon2D" index="0"]
 position = Vector2(12.9981, -6.00464)
 rotation = 0.280737
+
+[node name="mirror3" type="StaticBody2D" parent="." index="11"]
+position = Vector2(-197.991, 26.0691)
+rotation = 5.91686
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirror3" index="0"]
+rotation = 1.0472
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="mirror3" index="1"]
+position = Vector2(-12.9979, 6.00454)
+polygon = PackedVector2Array(19.0042, 11.9934, 12.0049, 13.9958, 8.00419, 11.9972, 3.00314, 8.99895, -0.998254, 5.00035, -2.99965, 1.00105, -4.0014, -3.9986, -4.00314, -8.9986, -4.00489, -13.9986, -1.00768, -21.9997)
+
+[node name="mirrorMark" type="Marker2D" parent="mirror3/CollisionPolygon2D" index="0"]
+position = Vector2(12.9981, -6.00464)
+rotation = 0.280737
+
+[node name="focal" type="Node2D" parent="." index="12"]
+script = ExtResource("7_3oy1g")
+focal_ray_threshold = 8
+focal_cluster_radius = 22.435
+focal_frames = ExtResource("3_3oy1g")
+
+[connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight3" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight4" to="focal" method="update_focal"]
