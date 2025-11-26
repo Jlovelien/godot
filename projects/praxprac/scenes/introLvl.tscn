@@ -139,7 +139,6 @@ texture = ExtResource("5_ll781")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="mirror3" index="1"]
 position = Vector2(-12.9979, 6.00454)
 polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
-one_way_collision = true
 one_way_collision_margin = 0.0
 
 [node name="mirror" type="StaticBody2D" parent="." index="11"]
