@@ -203,6 +203,12 @@ func _process(_delta: float) -> void:
 		if collider != null and collider.has_method("on_ray_batch_stats"):
 			collider.on_ray_batch_stats(hit_stats[collider])
 
+	# Also notify all detectors (even if no hits this frame) to ensure deactivation
+	for detector in get_tree().get_nodes_in_group("detectors"):
+		if detector != null and detector.has_method("on_ray_batch_stats"):
+			var stats_for_detector = hit_stats.get(detector, {})
+			detector.on_ray_batch_stats(stats_for_detector)
+
 	queue_redraw()
 
 
