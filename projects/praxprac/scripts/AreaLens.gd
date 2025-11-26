@@ -218,11 +218,24 @@ func _ray_segment_intersection(ray_o: Vector2, ray_dir: Vector2, a: Vector2, b: 
 		return {"pos": ray_o + ray_dir * t, "t": t, "u": u}
 	return {}
 
-func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, rayIdx: int) -> Dictionary:
+func interact_with_ray(hit_pos: Vector2, incoming_dir: Vector2, _ray: RayState, _surface_normal: Vector2) -> Dictionary:
+	var out_dir: Vector2 = (focalMark.global_position - hit_pos).normalized()
+	var segment_length := 600.0
 
 	return {
-		"start": hit_pos,
-		"end": focalMark.global_position,
-		"color": Color(0.3, 0.7, 1)
-		
+		"segments": [
+			{
+				"start": hit_pos,
+				"end": hit_pos + out_dir * segment_length,
+				"color": Color(0.3, 0.7, 1.0)
+			}
+		],
+		"rays": [
+			{
+				"origin": hit_pos,
+				"dir": out_dir,
+				"color": Color(0.3, 0.7, 1.0),
+				"offset_depth": 1
+			}
+		]
 	}

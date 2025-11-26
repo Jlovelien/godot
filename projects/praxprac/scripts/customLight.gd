@@ -1,22 +1,37 @@
 extends Node2D
 
+## Number of rays to emit from the light source
 @export_range(0, 1024, 1) var num_rays: int = 32
+## Maximum distance rays can travel before stopping
 @export_range(0.0, 20000.0, 1.0) var radius: float = 400.0
+## Angular spread of the emitted rays in radians (for cone shapes)
 @export_range(0.0, 7.0, 0.01) var spread: float = PI / 2.0
+## Direction of the light emission in radians
 @export_range(0.0, 7.0, 0.01) var direction: float = PI
+## Maximum number of times a ray can bounce before being discarded
 @export_range(0, 16, 1) var max_bounces: int = 5 
 
-@export var focal_sample_step: float = 100.0        # distance between samples along each segment
-@export var focal_ray_threshold: int = 60          # how many samples = "bright enough" for debug heatmap
-@export var debug_density_view: bool = true        # toggle density heatmap
-@export var enable_density: bool = false           # enable density sampling and focal calculation
-@export var use_depth_colors: bool = false         # if true, use depth-based colors for ray segments; else use actual ray colors
-@export var depth_colors: Array[Color] = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.WHITE]  # colors for each depth level
+## Distance between density samples along each ray segment
+@export var focal_sample_step: float = 100.0
+## Threshold for density count to consider a point "bright" in the debug heatmap
+@export var focal_ray_threshold: int = 60
+## Toggle the visualization of the density heatmap overlay
+@export var debug_density_view: bool = true
+## Enable density sampling and focal point calculations (can impact performance)
+@export var enable_density: bool = false
+## Use depth-based colors for ray segments instead of the ray's actual color
+@export var use_depth_colors: bool = false
+## Array of colors used for each bounce depth level when use_depth_colors is enabled
+@export var depth_colors: Array[Color] = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.WHITE]
 
-@export var light_id: int = 0                      # ID for this light source, used to distinguish light types
-@export_enum("Radial", "Cone", "Line") var light_shape: int = 0  # Shape of the light emission
-@export_range(0.0, 1000.0, 1.0) var line_length: float = 100.0   # Length of the line for line shape
-@export_range(1, 100, 1) var line_rays: int = 10                 # Number of rays along the line
+## Unique identifier for this light source, used to distinguish different light types
+@export var light_id: int = 0
+## Shape of the light emission: Radial (omnidirectional), Cone (directional spread), or Line (linear array)
+@export_enum("Radial", "Cone", "Line") var light_shape: int = 0
+## Length of the emission line when using Line shape
+@export_range(0.0, 1000.0, 1.0) var line_length: float = 100.0
+## Number of rays to distribute along the line when using Line shape
+@export_range(1, 100, 1) var line_rays: int = 10
 
 const DEBUG_DRAW_OPTIC_SEGMENTS := false  # turn this on if you want the mirror/lens debug segments
 
@@ -112,7 +127,8 @@ func _process(_delta: float) -> void:
 			var out: Dictionary = collider.interact_with_ray(
 				hit_pos,
 				dir,
-				ray
+				ray,
+				result.get("normal", Vector2.UP)
 			)
 
 			if out.is_empty():

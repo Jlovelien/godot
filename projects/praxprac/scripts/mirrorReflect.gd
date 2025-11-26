@@ -1,7 +1,8 @@
 extends StaticBody2D
 
-@onready var mirrorSide: Marker2D = $CollisionPolygon2D/mirrorMark
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
+
+@export var segment_length: float = 400.0
 
 func _process(_delta: float) -> void:
 	# Turn mirror 90 degrees right / left
@@ -14,19 +15,15 @@ func _process(_delta: float) -> void:
 func interact_with_ray(
 	hit_pos: Vector2,
 	incoming_dir: Vector2,
-	ray: RayState
+	_ray: RayState,
+	surface_normal: Vector2
 ) -> Dictionary:
-	# normal pointing out of the reflective face:
-	# assume mirrorMark is on the reflective side
-	var global_normal: Vector2 = (mirrorSide.global_position - global_position).normalized()
+	# Check if the ray is hitting the front side (dot product < 0 means incoming towards the surface)
+	if incoming_dir.dot(surface_normal) >= 0.0:
+		return {}  # no reflection; ray is hitting from the back or parallel
 
-	# If dot > 0 → ray moving roughly in same direction as normal = back side.
-	if incoming_dir.dot(global_normal) > 0.0:
-		return {}  # no reflection; ray just dies at hit_pos
-
-	# Reflect the incoming direction around the normal
-	var reflected_dir: Vector2 = incoming_dir.bounce(global_normal).normalized()
-	var segment_length := 400.0    # tweak or export if needed
+	# Reflect the incoming direction around the surface normal
+	var reflected_dir: Vector2 = incoming_dir.bounce(surface_normal).normalized()
 
 	return {
 		"segments": [

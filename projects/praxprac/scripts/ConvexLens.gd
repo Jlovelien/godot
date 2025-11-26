@@ -6,12 +6,13 @@ var drag_offset: Vector2
 var rotation_offset := 0.0
 
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
-@onready var focalMark: Marker2D = $CollisionPolygon2D/focalMark
+@onready var focalMark: Marker2D
+@onready var focalMark2: Marker2D
 
 @export var ray_threshold: int = 12          # how many rays to "activate" lens
 @export var beam_length: float = 600.0
 @export var debug_draw: bool = false
-@export var focal_offset: Vector2 = Vector2(0, 200)
+@export var focal_offset: Vector2 = Vector2(0, 100)
 
 var fl: AnimatedSprite2D = null              # optional focal animation
 
@@ -29,6 +30,16 @@ func _ready() -> void:
 	visual_polygon.scale = collision_polygon.scale
 	visual_polygon.z_index = 1
 	input_pickable = true
+
+	# First focal mark
+	focalMark = Marker2D.new()
+	collision_polygon.add_child(focalMark)
+	focalMark.position = focal_offset
+
+	# Second focal mark
+	focalMark2 = Marker2D.new()
+	collision_polygon.add_child(focalMark2)
+	focalMark2.position = -focal_offset
 
 	# Optional: animated focal sprite
 	fl = AnimatedSprite2D.new()
@@ -110,16 +121,16 @@ func on_ray_batch_stats(stats: Dictionary) -> void:
 	var positions: Array = stats["positions"]
 
 	var active := count >= ray_threshold
-	#_set_lens_active(active)
+# 	_set_lens_active(active)
 
-#func _set_lens_active(active: bool) -> void:
-	#if fl == null:
-		#return
-	#fl.visible = active
-	#if active:
-		#fl.play()
-	#else:
-		#fl.stop()
+# func _set_lens_active(active: bool) -> void:
+# 	if fl == null:
+# 		return
+# 	fl.visible = active
+# 	if active:
+# 		fl.play()
+# 	else:
+# 		fl.stop()
 
 # --------------------------------------------------------------------
 # Per-ray logic: how the lens transforms the incoming ray
@@ -127,10 +138,16 @@ func on_ray_batch_stats(stats: Dictionary) -> void:
 func interact_with_ray(
 	hit_pos: Vector2,
 	incoming_dir: Vector2,
-	ray: RayState
+	_ray: RayState,
+	_surface_normal: Vector2
 ) -> Dictionary:
-	# Basic convex lens: bend ray toward focalMark
-	var focal_pos: Vector2 = focalMark.global_position
+	# Basic convex lens: bend ray toward the appropriate focal point based on hit side (top/bottom)
+	var local_hit = to_local(hit_pos)
+	var focal_pos: Vector2
+	if local_hit.y <= 0:
+		focal_pos = focalMark.global_position
+	else:
+		focal_pos = focalMark2.global_position
 	var out_dir: Vector2 = (focal_pos - hit_pos).normalized()
 
 	_dbg_add_line(hit_pos, focal_pos, Color(0.3, 0.7, 1.0), 2.0)
