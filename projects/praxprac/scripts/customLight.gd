@@ -1,5 +1,7 @@
 extends Node2D
 
+## Enable/disable this light source
+@export var enabled: bool = true
 ## Number of rays to emit from the light source
 @export_range(0, 1024, 1) var num_rays: int = 32
 ## Maximum distance rays can travel before stopping
@@ -53,6 +55,10 @@ func _process(_delta: float) -> void:
 	rays_to_trace.clear()
 	density_samples.clear()
 	density_debug.clear()
+
+	if not enabled:
+		queue_redraw()
+		return
 
 	var hit_stats: Dictionary = {}  # collider -> { "count": int, "positions": Array[Vector2] }
 
@@ -114,12 +120,14 @@ func _process(_delta: float) -> void:
 		# accumulate per-object stats for this frame
 		if collider != null:
 			if not hit_stats.has(collider):
-				hit_stats[collider] = {
+				hit_stats[collider] = {}
+			if not hit_stats[collider].has(ray.source_id):
+				hit_stats[collider][ray.source_id] = {
 					"count": 0,
 					"positions": []
 				}
-			hit_stats[collider]["count"] += 1
-			var pos_arr: Array = hit_stats[collider]["positions"]
+			hit_stats[collider][ray.source_id]["count"] += 1
+			var pos_arr: Array = hit_stats[collider][ray.source_id]["positions"]
 			pos_arr.append(hit_pos)
 
 		if collider != null and collider.has_method("interact_with_ray") and not (collider in ray.interacted_objects):

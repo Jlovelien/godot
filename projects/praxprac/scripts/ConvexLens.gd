@@ -117,10 +117,13 @@ func _dbg_add_point(p: Vector2, r: float = 4.0, color: Color = Color(1, 0, 0)) -
 # Batch stats from emitter: called once per frame if this lens was hit
 # --------------------------------------------------------------------
 func on_ray_batch_stats(stats: Dictionary) -> void:
-	var count: int = stats["count"]
-	var positions: Array = stats["positions"]
+	var count: int = 0
+	var positions: Array = []
+	for source_stats in stats.values():
+		count += source_stats.get("count", 0)
+		positions.append_array(source_stats.get("positions", []))
 
-	var active := count >= ray_threshold
+	var _active := count >= ray_threshold
 # 	_set_lens_active(active)
 
 # func _set_lens_active(active: bool) -> void:
@@ -137,7 +140,7 @@ func on_ray_batch_stats(stats: Dictionary) -> void:
 # --------------------------------------------------------------------
 func interact_with_ray(
 	hit_pos: Vector2,
-	incoming_dir: Vector2,
+	_incoming_dir: Vector2,
 	_ray: RayState,
 	_surface_normal: Vector2
 ) -> Dictionary:

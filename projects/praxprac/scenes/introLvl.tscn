@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=12 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://c38vk0qm6ki6m" path="res://assets/rank013.png" id="5_ll781"]
 [ext_resource type="Script" uid="uid://bi0up0eta65hk" path="res://scripts/mirrorReflect.gd" id="6_3oy1g"]
 [ext_resource type="Script" uid="uid://1e488qcl6m0f" path="res://scripts/focalManager.gd" id="7_3oy1g"]
+[ext_resource type="Script" uid="uid://diejpjsp1i04" path="res://scripts/LightDetector.gd" id="9_1id4s"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdbex"]
 
 [node name="introLvl" instance=ExtResource("1_2loah")]
 rotation = 0.000349177
@@ -25,10 +28,10 @@ tile_map_data = PackedByteArray("AADy/wgAAAACAAEAAADz/wgAAAACAAEAAAD0/wgAAAACAAE
 position = Vector2(-240, 134)
 
 [node name="customLight" type="Node2D" parent="." index="4" groups=["rays"]]
-visible = false
 position = Vector2(2859, -1733)
 rotation = 1.706
 script = ExtResource("2_u6fla")
+enabled = false
 num_rays = 244
 radius = 4074.0
 spread = 0.2
@@ -51,17 +54,16 @@ focal_ray_threshold = 32
 debug_density_view = false
 use_depth_colors = true
 depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
-light_id = 1
 light_shape = 2
 line_rays = 100
 
 [node name="Line2D" type="Line2D" parent="customLight2" index="0"]
 
 [node name="customLight3" type="Node2D" parent="." index="6" groups=["rays"]]
-visible = false
 position = Vector2(210.926, -213.074)
 rotation = 1.5708
 script = ExtResource("2_u6fla")
+enabled = false
 num_rays = 128
 radius = 1635.0
 direction = 1.6
@@ -70,17 +72,16 @@ focal_ray_threshold = 32
 debug_density_view = false
 use_depth_colors = true
 depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
-light_id = 1
 light_shape = 1
 line_rays = 15
 
 [node name="Line2D" type="Line2D" parent="customLight3" index="0"]
 
 [node name="customLight4" type="Node2D" parent="." index="7" groups=["rays"]]
-visible = false
 position = Vector2(-84.0744, -212.971)
 rotation = 1.5708
 script = ExtResource("2_u6fla")
+enabled = false
 num_rays = 128
 radius = 1635.0
 direction = 1.6
@@ -89,7 +90,6 @@ focal_ray_threshold = 32
 debug_density_view = false
 use_depth_colors = true
 depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
-light_id = 1
 light_shape = 1
 line_rays = 15
 
@@ -160,6 +160,13 @@ script = ExtResource("7_3oy1g")
 focal_ray_threshold = 8
 focal_cluster_radius = 22.435
 focal_frames = ExtResource("3_3oy1g")
+
+[node name="Detector" type="Area2D" parent="." index="13"]
+script = ExtResource("9_1id4s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" index="0"]
+position = Vector2(327.003, 7.88582)
+shape = SubResource("RectangleShape2D_xdbex")
 
 [connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
 [connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]
