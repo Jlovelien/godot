@@ -1,8 +1,15 @@
 extends StaticBody2D
 
-@onready var collision_polygon: CollisionPolygon2D = $CollisionPolygonFront
+@onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
 @export var segment_length: float = 400.0
+
+func _process(_delta: float) -> void:
+	# Turn mirror 90 degrees right / left
+	if Input.is_action_just_pressed("rotateRight"):
+		rotation_degrees += 90.0
+	if Input.is_action_just_pressed("rotateLeft"):
+		rotation_degrees -= 90.0
 
 # Per-ray logic for a mirror
 func interact_with_ray(

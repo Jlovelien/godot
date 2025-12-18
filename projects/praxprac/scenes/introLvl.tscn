@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=13 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
 [ext_resource type="SpriteFrames" uid="uid://ckmjflhtdrpk5" path="res://assets/animations/convexLight.tres" id="3_3oy1g"]
-[ext_resource type="Script" uid="uid://6p5u3meqegcj" path="res://scripts/convexLens.gd" id="3_ll781"]
+[ext_resource type="Script" uid="uid://6p5u3meqegcj" path="res://scripts/ConvexLens.gd" id="3_ll781"]
 [ext_resource type="Texture2D" uid="uid://d3nrnkvpk6r2" path="res://assets/icon_plusLarge.png" id="5_hfasc"]
 [ext_resource type="Texture2D" uid="uid://c38vk0qm6ki6m" path="res://assets/rank013.png" id="5_ll781"]
 [ext_resource type="Script" uid="uid://bi0up0eta65hk" path="res://scripts/mirrorReflect.gd" id="6_3oy1g"]
 [ext_resource type="Script" uid="uid://1e488qcl6m0f" path="res://scripts/focalManager.gd" id="7_3oy1g"]
 [ext_resource type="Script" uid="uid://diejpjsp1i04" path="res://scripts/LightDetector.gd" id="9_1id4s"]
+[ext_resource type="Script" uid="uid://d22ohbgqwek6o" path="res://scripts/mirrorMain.gd" id="10_xdbex"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
@@ -112,62 +113,88 @@ polygon = PackedVector2Array(8.21649, -0.726254, 6.30578, -0.00415611, 2.86633, 
 scale = Vector2(1.95507, -0.140001)
 texture = ExtResource("5_hfasc")
 
-[node name="mirror2" type="StaticBody2D" parent="." index="9"]
-position = Vector2(-164.973, 77.0576)
-rotation = -0.785398
-script = ExtResource("6_3oy1g")
-
-[node name="Sprite2D" type="Sprite2D" parent="mirror2" index="0"]
-rotation = 1.5708
-scale = Vector2(0.612535, 0.741713)
-texture = ExtResource("5_ll781")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="mirror2" index="1"]
-position = Vector2(-12.9979, 6.00454)
-polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
-
-[node name="mirror3" type="StaticBody2D" parent="." index="10"]
-position = Vector2(237.95, -145)
-rotation = 2.35619
-script = ExtResource("6_3oy1g")
-
-[node name="Sprite2D" type="Sprite2D" parent="mirror3" index="0"]
-rotation = 1.5708
-scale = Vector2(0.612535, 0.741713)
-texture = ExtResource("5_ll781")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="mirror3" index="1"]
-position = Vector2(-12.9979, 6.00454)
-polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
-one_way_collision_margin = 0.0
-
-[node name="mirror" type="StaticBody2D" parent="." index="11"]
-position = Vector2(-165.051, -145)
-rotation = 0.785398
-script = ExtResource("6_3oy1g")
-
-[node name="Sprite2D" type="Sprite2D" parent="mirror" index="0"]
-rotation = 1.5708
-scale = Vector2(0.612535, 0.741713)
-texture = ExtResource("5_ll781")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="mirror" index="1"]
-position = Vector2(-12.9979, 6.00454)
-polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
-
-[node name="focal" type="Node2D" parent="." index="12"]
+[node name="focal" type="Node2D" parent="." index="9"]
 script = ExtResource("7_3oy1g")
 focal_ray_threshold = 8
 focal_cluster_radius = 22.435
 focal_frames = ExtResource("3_3oy1g")
 
-[node name="Detector" type="Area2D" parent="." index="13"]
+[node name="Detector" type="Area2D" parent="." index="10"]
 script = ExtResource("9_1id4s")
 required_ray_count = 25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" index="0"]
 position = Vector2(327.003, 7.88582)
 shape = SubResource("RectangleShape2D_xdbex")
+
+[node name="mirrorMain1" type="Node2D" parent="." index="11"]
+position = Vector2(-171.053, 67.1398)
+rotation = -0.781245
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain1" index="0"]
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain1/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain1/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(1.0421, 0.965888)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain1" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain1/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="mirrorMain2" type="Node2D" parent="." index="12"]
+position = Vector2(-167.405, -154.53)
+rotation = 0.783117
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain2" index="0"]
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain2/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain2/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(1.01649, 0.961082)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain2" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain2/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="mirrorMain3" type="Node2D" parent="." index="13"]
+position = Vector2(272.205, -162.135)
+rotation = 2.33284
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain3" index="0"]
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain3/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain3/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(0.946679, 0.954624)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain3" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain3/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
 
 [connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
 [connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]

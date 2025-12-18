@@ -1,7 +1,7 @@
 extends Area2D
 
 ## Minimum number of rays required to trigger the detector
-@export var required_ray_count: int = 5
+@export var required_ray_count: int = 10
 ## List of light source IDs that this detector responds to (empty = all sources)
 @export var allowed_source_ids: Array[int] = []
 ## Whether the detector is currently active (has enough rays hitting it)
@@ -51,11 +51,9 @@ func on_ray_batch_stats(stats: Dictionary) -> void:
 	is_active = total_ray_count >= required_ray_count
 
 	if is_active and not was_active:
-		print("Detector activated!")
 		activated.emit()
 		_set_indicator(true)
 	elif not is_active and was_active:
-		print("Detector deactivated!")
 		deactivated.emit()
 		_set_indicator(false)
 
