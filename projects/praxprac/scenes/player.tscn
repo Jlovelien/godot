@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c126ngx2plml"]
+[gd_scene load_steps=15 format=3 uid="uid://c126ngx2plml"]
 
 [ext_resource type="Script" uid="uid://bipa2qfl8oqmw" path="res://scripts/player.gd" id="1_krbot"]
 [ext_resource type="Texture2D" uid="uid://daxfidagxukr4" path="res://assets/sokoban_tilesheet@2.png" id="1_obr4f"]
@@ -87,6 +87,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obr4f"]
 size = Vector2(99, 130)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+size = Vector2(131.786, 145.104)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 up_direction = Vector2(0.994218, -0.107376)
 slide_on_ceiling = false
@@ -102,3 +105,14 @@ autoplay = "idle"
 [node name="Square" type="CollisionShape2D" parent="." groups=["player"]]
 position = Vector2(-1.5, -4)
 shape = SubResource("RectangleShape2D_obr4f")
+
+[node name="pillarDetect" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pillarDetect"]
+position = Vector2(-1.41233, -8.3611)
+shape = SubResource("RectangleShape2D_g2els")
+
+[connection signal="body_entered" from="pillarDetect" to="." method="_on_pillar_detect_body_entered"]
+[connection signal="body_exited" from="pillarDetect" to="." method="_on_pillar_detect_body_exited"]

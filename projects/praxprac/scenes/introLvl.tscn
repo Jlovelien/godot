@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=17 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
@@ -10,16 +10,26 @@
 [ext_resource type="Script" uid="uid://1e488qcl6m0f" path="res://scripts/focalManager.gd" id="7_3oy1g"]
 [ext_resource type="Script" uid="uid://diejpjsp1i04" path="res://scripts/LightDetector.gd" id="9_1id4s"]
 [ext_resource type="Script" uid="uid://d22ohbgqwek6o" path="res://scripts/mirrorMain.gd" id="10_xdbex"]
+[ext_resource type="Texture2D" uid="uid://binbqijbu6gxt" path="res://assets/pillarBase.png" id="11_q8umn"]
+[ext_resource type="Script" uid="uid://bftmt7dx85p4y" path="res://scripts/pillarGrow.gd" id="11_rf0qh"]
+[ext_resource type="Script" uid="uid://cilrch4nhceej" path="res://scripts/throwLogic.gd" id="13_rf0qh"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdbex"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8efuv"]
+size = Vector2(18.0109, 18.0047)
+
 [node name="introLvl" instance=ExtResource("1_2loah")]
 rotation = 0.000349177
+scale = Vector2(0.997631, 0.999999)
 
 [node name="TextureRect" parent="." index="0"]
 visible = false
+
+[node name="Camera2D" parent="." index="1"]
+scale = Vector2(0.27275, 0.685433)
 
 [node name="TileMapLayer2" parent="." index="2"]
 position = Vector2(0.999651, -1.00035)
@@ -29,6 +39,8 @@ tile_map_data = PackedByteArray("AADy/wgAAAACAAEAAADz/wgAAAACAAEAAAD0/wgAAAACAAE
 position = Vector2(-240, 134)
 
 [node name="customLight" type="Node2D" parent="." index="4" groups=["rays"]]
+z_index = -2
+z_as_relative = false
 position = Vector2(2859, -1733)
 rotation = 1.706
 script = ExtResource("2_u6fla")
@@ -44,6 +56,8 @@ depth_colors = Array[Color]([Color(0.0288205, 0.553692, 0.903359, 1), Color(0.55
 [node name="Line2D" type="Line2D" parent="customLight" index="0"]
 
 [node name="customLight2" type="Node2D" parent="." index="5" groups=["rays"]]
+z_index = -2
+z_as_relative = false
 position = Vector2(383.031, 87.8663)
 rotation = 1.706
 script = ExtResource("2_u6fla")
@@ -60,6 +74,8 @@ line_rays = 100
 [node name="Line2D" type="Line2D" parent="customLight2" index="0"]
 
 [node name="customLight3" type="Node2D" parent="." index="6" groups=["rays"]]
+z_index = -2
+z_as_relative = false
 position = Vector2(210.926, -213.074)
 rotation = 1.5708
 script = ExtResource("2_u6fla")
@@ -78,6 +94,8 @@ line_rays = 15
 [node name="Line2D" type="Line2D" parent="customLight3" index="0"]
 
 [node name="customLight4" type="Node2D" parent="." index="7" groups=["rays"]]
+z_index = -2
+z_as_relative = false
 position = Vector2(-84.0744, -212.971)
 rotation = 1.5708
 script = ExtResource("2_u6fla")
@@ -133,6 +151,8 @@ rotation = -0.781245
 script = ExtResource("10_xdbex")
 
 [node name="mirrorFront" type="StaticBody2D" parent="mirrorMain1" index="0"]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("6_3oy1g")
 
 [node name="Sprite2D" type="Sprite2D" parent="mirrorMain1/mirrorFront" index="0"]
@@ -156,6 +176,8 @@ rotation = 0.783117
 script = ExtResource("10_xdbex")
 
 [node name="mirrorFront" type="StaticBody2D" parent="mirrorMain2" index="0"]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("6_3oy1g")
 
 [node name="Sprite2D" type="Sprite2D" parent="mirrorMain2/mirrorFront" index="0"]
@@ -179,6 +201,8 @@ rotation = 2.33284
 script = ExtResource("10_xdbex")
 
 [node name="mirrorFront" type="StaticBody2D" parent="mirrorMain3" index="0"]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("6_3oy1g")
 
 [node name="Sprite2D" type="Sprite2D" parent="mirrorMain3/mirrorFront" index="0"]
@@ -195,6 +219,34 @@ polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53
 
 [node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain3/mirrorBack" index="0"]
 polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="pillar1" type="CharacterBody2D" parent="." index="14"]
+z_index = -1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0.457018, -1.83082)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("11_rf0qh")
+
+[node name="pillarSprite" type="Sprite2D" parent="pillar1" index="0"]
+z_index = -1
+z_as_relative = false
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-97.406, 135.297)
+scale = Vector2(0.197642, 0.190183)
+texture = ExtResource("11_q8umn")
+region_enabled = true
+region_rect = Rect2(0, 0, 88, 88)
+
+[node name="pillarCollide" type="CollisionShape2D" parent="pillar1" index="1"]
+position = Vector2(-97.3333, 135.516)
+shape = SubResource("RectangleShape2D_8efuv")
+
+[node name="throwLogic" type="Node" parent="pillar1" index="2"]
+script = ExtResource("13_rf0qh")
+metadata/_custom_type_script = "uid://cilrch4nhceej"
 
 [connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
 [connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]
