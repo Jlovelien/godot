@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cb1pmckkx27k2"]
+[gd_scene load_steps=18 format=4 uid="uid://cb1pmckkx27k2"]
 
 [ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
 [ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://binbqijbu6gxt" path="res://assets/pillarBase.png" id="11_q8umn"]
 [ext_resource type="Script" uid="uid://bftmt7dx85p4y" path="res://scripts/pillarGrow.gd" id="11_rf0qh"]
 [ext_resource type="Script" uid="uid://cilrch4nhceej" path="res://scripts/throwLogic.gd" id="13_rf0qh"]
+[ext_resource type="Script" uid="uid://bxstdm8jv5m2i" path="res://scripts/concaveLens.gd" id="14_icaep"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
 
@@ -247,6 +248,23 @@ shape = SubResource("RectangleShape2D_8efuv")
 [node name="throwLogic" type="Node" parent="pillar1" index="2"]
 script = ExtResource("13_rf0qh")
 metadata/_custom_type_script = "uid://cilrch4nhceej"
+
+[node name="concaveLens" type="Area2D" parent="." index="15"]
+position = Vector2(177.676, 80.3363)
+rotation = -1.52109
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_icaep")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="concaveLens" index="0"]
+material = SubResource("CanvasItemMaterial_uts5u")
+position = Vector2(3.00067, 1.99895)
+scale = Vector2(5.23329, 2.77454)
+polygon = PackedVector2Array(8.21649, -0.726254, 6.30578, -0.00415611, 2.86633, 0.358528, -0.573189, 0.360794, -3.82162, 0.362934, -6.87904, 0.00452995, -9.55435, -0.714546, -6.87931, -1.43715, -3.82203, -1.79958, -0.573589, -1.80172, 2.86593, -1.80399, 6.30552, -1.44584)
+
+[node name="Sprite2D" type="Sprite2D" parent="concaveLens" index="1"]
+scale = Vector2(1.95507, -0.140001)
+texture = ExtResource("5_hfasc")
 
 [connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
 [connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]
