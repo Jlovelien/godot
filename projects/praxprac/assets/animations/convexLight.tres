@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://ckmjflhtdrpk5"]
+
+[ext_resource type="Texture2D" uid="uid://dln3et3rc55vm" path="res://assets/simpleSpace_tilesheet.png" id="1_00rb3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6ajm"]
+atlas = ExtResource("1_00rb3")
+region = Rect2(448, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7i3ww"]
+atlas = ExtResource("1_00rb3")
+region = Rect2(384, 192, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6ajm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7i3ww")
+}],
+"loop": true,
+"name": &"convexLight",
+"speed": 5.0
+}]

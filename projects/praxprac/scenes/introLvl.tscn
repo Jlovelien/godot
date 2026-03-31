@@ -1,0 +1,272 @@
+[gd_scene load_steps=18 format=4 uid="uid://cb1pmckkx27k2"]
+
+[ext_resource type="PackedScene" uid="uid://ct3v131dlgmuj" path="res://scenes/outdoorLvls.tscn" id="1_2loah"]
+[ext_resource type="Script" uid="uid://bcg6ydtmtyacl" path="res://scripts/customLight.gd" id="2_u6fla"]
+[ext_resource type="SpriteFrames" uid="uid://ckmjflhtdrpk5" path="res://assets/animations/convexLight.tres" id="3_3oy1g"]
+[ext_resource type="Script" uid="uid://6p5u3meqegcj" path="res://scripts/ConvexLens.gd" id="3_ll781"]
+[ext_resource type="Texture2D" uid="uid://d3nrnkvpk6r2" path="res://assets/icon_plusLarge.png" id="5_hfasc"]
+[ext_resource type="Texture2D" uid="uid://c38vk0qm6ki6m" path="res://assets/rank013.png" id="5_ll781"]
+[ext_resource type="Script" uid="uid://bi0up0eta65hk" path="res://scripts/mirrorReflect.gd" id="6_3oy1g"]
+[ext_resource type="Script" uid="uid://1e488qcl6m0f" path="res://scripts/focalManager.gd" id="7_3oy1g"]
+[ext_resource type="Script" uid="uid://diejpjsp1i04" path="res://scripts/LightDetector.gd" id="9_1id4s"]
+[ext_resource type="Script" uid="uid://d22ohbgqwek6o" path="res://scripts/mirrorMain.gd" id="10_xdbex"]
+[ext_resource type="Texture2D" uid="uid://binbqijbu6gxt" path="res://assets/pillarBase.png" id="11_q8umn"]
+[ext_resource type="Script" uid="uid://bftmt7dx85p4y" path="res://scripts/pillarGrow.gd" id="11_rf0qh"]
+[ext_resource type="Script" uid="uid://cilrch4nhceej" path="res://scripts/throwLogic.gd" id="13_rf0qh"]
+[ext_resource type="Script" uid="uid://bxstdm8jv5m2i" path="res://scripts/concaveLens.gd" id="14_icaep"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uts5u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdbex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8efuv"]
+size = Vector2(18.0109, 18.0047)
+
+[node name="introLvl" instance=ExtResource("1_2loah")]
+rotation = 0.000349177
+scale = Vector2(0.997631, 0.999999)
+
+[node name="TextureRect" parent="." index="0"]
+visible = false
+
+[node name="Camera2D" parent="." index="1"]
+scale = Vector2(0.27275, 0.685433)
+
+[node name="TileMapLayer2" parent="." index="2"]
+position = Vector2(0.999651, -1.00035)
+tile_map_data = PackedByteArray("AADy/wgAAAACAAEAAADz/wgAAAACAAEAAAD0/wgAAAACAAEAAAD1/wgAAAACAAEAAAD2/wgAAAACAAEAAAD3/wgAAAACAAEAAAD5/wgAAAACAAEAAAD4/wgAAAACAAEAAAD6/wgAAAACAAEAAADy/wkAAAACAAIAAADz/wkAAAACAAIAAAD0/wkAAAACAAIAAAD1/wkAAAACAAIAAAD2/wkAAAACAAIAAAD3/wkAAAACAAIAAAD4/wkAAAACAAIAAAD5/wkAAAACAAIAAAD6/wkAAAACAAIAAADy/woAAAACAAIAAADz/woAAAACAAIAAAD0/woAAAACAAIAAAD1/woAAAACAAIAAAD2/woAAAACAAIAAAD3/woAAAACAAIAAAD4/woAAAACAAIAAAD5/woAAAACAAIAAAD6/woAAAACAAIAAADy/wsAAAACAAIAAADz/wsAAAACAAIAAAD0/wsAAAACAAIAAAD1/wsAAAACAAIAAAD2/wsAAAACAAIAAAD3/wsAAAACAAIAAAD4/wsAAAACAAIAAAD5/wsAAAACAAIAAAD6/wsAAAACAAIAAADx/woAAAAOAAEAAADx/wkAAAAOAAEAAADx/wgAAAAOAAEAAADw/wgAAAAOAAEAAADw/wcAAAAOAAEAAADx/wcAAAAOAAEAAADx/wYAAAAOAAEAAADx/wUAAAAOAAEAAADx/wQAAAAOAAEAAADx/wMAAAAOAAEAAADx/wIAAAAOAAEAAADx/wEAAAAOAAEAAADx/wAAAAAOAAEAAADx////AAAOAAEAAADx//7/AAAOAAEAAADw//3/AAAOAAEAAADw//z/AAAOAAEAAADw//v/AAAOAAEAAADx//v/AAAOAAEAAADx//r/AAAOAAEAAADx//z/AAAOAAEAAADx//3/AAAOAAEAAADx//n/AAAOAAEAAADw//n/AAAOAAEAAADw//r/AAAOAAEAAADx//j/AAAOAAEAAADx//f/AAAOAAEAAADx//b/AAAOAAEAAADx//X/AAAOAAEAAADv//v/AAAOAAEAAADv//z/AAAOAAEAAADv//3/AAAOAAEAAADu//3/AAAOAAEAAADt//3/AAAOAAEAAADt//z/AAAOAAEAAADt//v/AAAOAAEAAADt//r/AAAOAAEAAADt//n/AAAOAAEAAADt//j/AAAOAAEAAADt//f/AAAOAAEAAADt//b/AAAOAAEAAADs//f/AAAOAAEAAADs//j/AAAOAAEAAADs//n/AAAOAAEAAADs//r/AAAOAAEAAADs//v/AAAOAAEAAADs//z/AAAOAAEAAADr//z/AAAOAAEAAADr//3/AAAOAAEAAADr//7/AAAOAAEAAADr////AAAOAAEAAADr/wAAAAAOAAEAAADr/wEAAAAOAAEAAADr/wIAAAAOAAEAAADr/wMAAAAOAAEAAADr/wQAAAAOAAEAAADr/wUAAAAOAAEAAADr/wYAAAAOAAEAAADr/wcAAAAOAAEAAADr/wgAAAAOAAEAAADr/wkAAAAOAAEAAADr/woAAAAOAAEAAADs//7/AAAOAAEAAADs////AAAOAAEAAADs/wAAAAAOAAEAAADs/wEAAAAOAAEAAADs/wIAAAAOAAEAAADs/wMAAAAOAAEAAADs/wQAAAAOAAEAAADs/wUAAAAOAAEAAADs/wYAAAAOAAEAAADt//7/AAAOAAEAAADt////AAAOAAEAAADt/wAAAAAOAAEAAADt/wEAAAAOAAEAAADt/wIAAAAOAAEAAADt/wMAAAAOAAEAAADt/wQAAAAOAAEAAADt/wUAAAAOAAEAAADt/wYAAAAOAAEAAADu//7/AAAOAAEAAADu////AAAOAAEAAADu/wAAAAAOAAEAAADu/wEAAAAOAAEAAADu/wIAAAAOAAEAAADu/wMAAAAOAAEAAADu/wQAAAAOAAEAAADu/wUAAAAOAAEAAADu/wYAAAAOAAEAAADv//7/AAAOAAEAAADv////AAAOAAEAAADv/wAAAAAOAAEAAADv/wEAAAAOAAEAAADv/wIAAAAOAAEAAADv/wMAAAAOAAEAAADv/wQAAAAOAAEAAADv/wUAAAAOAAEAAADv/wYAAAAOAAEAAADw//7/AAAOAAEAAADw////AAAOAAEAAADw/wAAAAAOAAEAAADw/wEAAAAOAAEAAADw/wIAAAAOAAEAAADw/wMAAAAOAAEAAADw/wQAAAAOAAEAAADw/wUAAAAOAAEAAADw/wYAAAAOAAEAAADr/wsAAAAOAAEAAADx/wsAAAAOAAEAAADs/wcAAAAOAAEAAADs/wgAAAAOAAEAAADs/wkAAAAOAAEAAADs/woAAAAOAAEAAADs/wsAAAAOAAEAAADt/wcAAAAOAAEAAADt/wgAAAAOAAEAAADt/wkAAAAOAAEAAADt/woAAAAOAAEAAADt/wsAAAAOAAEAAADu/wcAAAAOAAEAAADu/wgAAAAOAAEAAADu/wkAAAAOAAEAAADu/woAAAAOAAEAAADu/wsAAAAOAAEAAADv/wcAAAAOAAEAAADv/wgAAAAOAAEAAADv/wkAAAAOAAEAAADv/woAAAAOAAEAAADv/wsAAAAOAAEAAADw/wkAAAAOAAEAAADw/woAAAAOAAEAAADw/wsAAAAOAAEAAADs//3/AAAOAAEAAADr//v/AAAOAAAAAADs//b/AAAOAAAAAADt//X/AAAOAAAAAADu//z/AAAOAAAAAADv//r/AAAOAAAAAADw//j/AAAOAAAAAADx//T/AAAOAAAAAAD7/wgAAAACAAEAAAD8/wgAAAACAAEAAAD9/wgAAAACAAEAAAD+/wgAAAACAAEAAAD//wgAAAACAAEAAAAAAAgAAAACAAEAAAABAAgAAAACAAEAAAACAAgAAAACAAEAAAADAAgAAAACAAEAAAAEAAgAAAACAAEAAAAFAAgAAAACAAEAAAAGAAgAAAACAAEAAAAHAAgAAAACAAEAAAAIAAgAAAACAAEAAAAJAAgAAAACAAEAAAAKAAgAAAACAAEAAAALAAgAAAACAAEAAAAMAAgAAAACAAEAAAANAAgAAAACAAEAAAAOAAgAAAACAAEAAAAPAAgAAAACAAEAAAAQAAgAAAACAAEAAAARAAgAAAACAAEAAAASAAgAAAACAAEAAAATAAgAAAACAAEAAAAUAAgAAAACAAEAAAD7/wkAAAACAAIAAAD7/woAAAACAAIAAAD7/wsAAAACAAIAAAD8/wkAAAACAAIAAAD8/woAAAACAAIAAAD8/wsAAAACAAIAAAD9/wkAAAACAAIAAAD9/woAAAACAAIAAAD9/wsAAAACAAIAAAD+/wkAAAACAAIAAAD+/woAAAACAAIAAAD+/wsAAAACAAIAAAD//wkAAAACAAIAAAD//woAAAACAAIAAAD//wsAAAACAAIAAAAAAAkAAAACAAIAAAAAAAoAAAACAAIAAAAAAAsAAAACAAIAAAABAAkAAAACAAIAAAABAAoAAAACAAIAAAABAAsAAAACAAIAAAACAAkAAAACAAIAAAACAAoAAAACAAIAAAACAAsAAAACAAIAAAADAAkAAAACAAIAAAADAAoAAAACAAIAAAADAAsAAAACAAIAAAAEAAkAAAACAAIAAAAEAAoAAAACAAIAAAAEAAsAAAACAAIAAAAFAAkAAAACAAIAAAAFAAoAAAACAAIAAAAFAAsAAAACAAIAAAAGAAkAAAACAAIAAAAGAAoAAAACAAIAAAAGAAsAAAACAAIAAAAHAAkAAAACAAIAAAAHAAoAAAACAAIAAAAHAAsAAAACAAIAAAAIAAkAAAACAAIAAAAIAAoAAAACAAIAAAAIAAsAAAACAAIAAAAJAAkAAAACAAIAAAAJAAoAAAACAAIAAAAJAAsAAAACAAIAAAAKAAkAAAACAAIAAAAKAAoAAAACAAIAAAAKAAsAAAACAAIAAAALAAkAAAACAAIAAAALAAoAAAACAAIAAAALAAsAAAACAAIAAAAMAAkAAAACAAIAAAAMAAoAAAACAAIAAAAMAAsAAAACAAIAAAANAAkAAAACAAIAAAANAAoAAAACAAIAAAANAAsAAAACAAIAAAAOAAkAAAACAAIAAAAOAAoAAAACAAIAAAAOAAsAAAACAAIAAAAPAAkAAAACAAIAAAAPAAoAAAACAAIAAAAPAAsAAAACAAIAAAAQAAkAAAACAAIAAAAQAAoAAAACAAIAAAAQAAsAAAACAAIAAAARAAkAAAACAAIAAAARAAoAAAACAAIAAAARAAsAAAACAAIAAAASAAkAAAACAAIAAAASAAoAAAACAAIAAAASAAsAAAACAAIAAAATAAkAAAACAAIAAAATAAoAAAACAAIAAAATAAsAAAACAAIAAAAUAAkAAAACAAIAAAAUAAoAAAACAAIAAAAUAAsAAAACAAIAAAAFAP3/AAAFAAAAAAAGAP3/AAAFAAAAAAAHAP3/AAAFAAAAAAAIAP3/AAAGAAAAAAAEAP3/AAAFAAAAAAADAP3/AAAFAAAAAAACAP3/AAAFAAAAAAABAP3/AAAFAAAAAAAAAP3/AAAFAAAAAAD///3/AAAFAAAAAAD+//3/AAAFAAAAAAD9//3/AAAFAAAAAAD8//3/AAAFAAAAAAD7//3/AAAEAAAAAAA=")
+
+[node name="Player" parent="." index="3"]
+position = Vector2(-240, 134)
+
+[node name="customLight" type="Node2D" parent="." index="4" groups=["rays"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(2859, -1733)
+rotation = 1.706
+script = ExtResource("2_u6fla")
+num_rays = 244
+radius = 4074.0
+spread = 0.2
+direction = 2.59
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.0288205, 0.553692, 0.903359, 1), Color(0.556214, 0.000198684, 0.547713, 1), Color(0.657925, 0, 0.175251, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+
+[node name="Line2D" type="Line2D" parent="customLight" index="0"]
+
+[node name="customLight2" type="Node2D" parent="." index="5" groups=["rays"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(383.031, 87.8663)
+rotation = 1.706
+script = ExtResource("2_u6fla")
+num_rays = 512
+radius = 894.0
+focal_sample_step = 10.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_shape = 2
+line_rays = 100
+
+[node name="Line2D" type="Line2D" parent="customLight2" index="0"]
+
+[node name="customLight3" type="Node2D" parent="." index="6" groups=["rays"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(210.926, -213.074)
+rotation = 1.5708
+script = ExtResource("2_u6fla")
+enabled = false
+num_rays = 128
+radius = 1635.0
+direction = 1.6
+focal_sample_step = 50.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_shape = 1
+line_rays = 15
+
+[node name="Line2D" type="Line2D" parent="customLight3" index="0"]
+
+[node name="customLight4" type="Node2D" parent="." index="7" groups=["rays"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(-84.0744, -212.971)
+rotation = 1.5708
+script = ExtResource("2_u6fla")
+enabled = false
+num_rays = 128
+radius = 1635.0
+direction = 1.6
+focal_sample_step = 50.0
+focal_ray_threshold = 32
+debug_density_view = false
+use_depth_colors = true
+depth_colors = Array[Color]([Color(0.572502, 0.403859, 0.962098, 1), Color(0, 0, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 0, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1)])
+light_shape = 1
+line_rays = 15
+
+[node name="Line2D" type="Line2D" parent="customLight4" index="0"]
+
+[node name="convexLens" type="Area2D" parent="." index="8"]
+position = Vector2(244.977, -65.0856)
+rotation = -0.798796
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("3_ll781")
+focal_offset = Vector2(0, 40)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="convexLens" index="0"]
+material = SubResource("CanvasItemMaterial_uts5u")
+position = Vector2(3.00067, 1.99895)
+scale = Vector2(5.23329, 2.77454)
+polygon = PackedVector2Array(8.21649, -0.726254, 6.30578, -0.00415611, 2.86633, 0.358528, -0.573189, 0.360794, -3.82162, 0.362934, -6.87904, 0.00452995, -9.55435, -0.714546, -6.87931, -1.43715, -3.82203, -1.79958, -0.573589, -1.80172, 2.86593, -1.80399, 6.30552, -1.44584)
+
+[node name="Sprite2D" type="Sprite2D" parent="convexLens" index="1"]
+scale = Vector2(1.95507, -0.140001)
+texture = ExtResource("5_hfasc")
+
+[node name="focal" type="Node2D" parent="." index="9"]
+script = ExtResource("7_3oy1g")
+focal_ray_threshold = 8
+focal_cluster_radius = 22.435
+focal_frames = ExtResource("3_3oy1g")
+
+[node name="Detector" type="Area2D" parent="." index="10"]
+script = ExtResource("9_1id4s")
+required_ray_count = 25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" index="0"]
+position = Vector2(327.003, 7.88582)
+shape = SubResource("RectangleShape2D_xdbex")
+
+[node name="mirrorMain1" type="Node2D" parent="." index="11"]
+position = Vector2(-171.053, 67.1398)
+rotation = -0.781245
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain1" index="0"]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain1/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain1/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(1.0421, 0.965888)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain1" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain1/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="mirrorMain2" type="Node2D" parent="." index="12"]
+position = Vector2(-167.405, -154.53)
+rotation = 0.783117
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain2" index="0"]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain2/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain2/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(1.01649, 0.961082)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain2" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain2/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="mirrorMain3" type="Node2D" parent="." index="13"]
+position = Vector2(272.205, -162.135)
+rotation = 2.33284
+script = ExtResource("10_xdbex")
+
+[node name="mirrorFront" type="StaticBody2D" parent="mirrorMain3" index="0"]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("6_3oy1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="mirrorMain3/mirrorFront" index="0"]
+rotation = 1.5708
+scale = Vector2(0.612535, 0.741713)
+texture = ExtResource("5_ll781")
+
+[node name="CollisionPolygonFront" type="CollisionPolygon2D" parent="mirrorMain3/mirrorFront" index="1"]
+position = Vector2(-12.9979, 6.00454)
+scale = Vector2(0.946679, 0.954624)
+polygon = PackedVector2Array(9.00479, 13.9969, 3.80666, -2.46587, 3.80418, -9.53694, 6.62915, -19.4374, 8.99081, -26.0031)
+
+[node name="mirrorBack" type="StaticBody2D" parent="mirrorMain3" index="1"]
+
+[node name="CollisionPolygonBack" type="CollisionPolygon2D" parent="mirrorMain3/mirrorBack" index="0"]
+polygon = PackedVector2Array(-4.00864, 20.0014, -9.08012, 3.5748, -9.13329, -3.5225, -4.01479, -19.9908, -8.12551, -10.4886, -10.8964, -3.44234, -10.894, 3.40708)
+
+[node name="pillar1" type="CharacterBody2D" parent="." index="14"]
+z_index = -1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0.457018, -1.83082)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("11_rf0qh")
+
+[node name="pillarSprite" type="Sprite2D" parent="pillar1" index="0"]
+z_index = -1
+z_as_relative = false
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-97.406, 135.297)
+scale = Vector2(0.197642, 0.190183)
+texture = ExtResource("11_q8umn")
+region_enabled = true
+region_rect = Rect2(0, 0, 88, 88)
+
+[node name="pillarCollide" type="CollisionShape2D" parent="pillar1" index="1"]
+position = Vector2(-97.3333, 135.516)
+shape = SubResource("RectangleShape2D_8efuv")
+
+[node name="throwLogic" type="Node" parent="pillar1" index="2"]
+script = ExtResource("13_rf0qh")
+metadata/_custom_type_script = "uid://cilrch4nhceej"
+
+[node name="concaveLens" type="Area2D" parent="." index="15"]
+position = Vector2(177.676, 80.3363)
+rotation = -1.52109
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_icaep")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="concaveLens" index="0"]
+material = SubResource("CanvasItemMaterial_uts5u")
+position = Vector2(3.00067, 1.99895)
+scale = Vector2(5.23329, 2.77454)
+polygon = PackedVector2Array(8.21649, -0.726254, 6.30578, -0.00415611, 2.86633, 0.358528, -0.573189, 0.360794, -3.82162, 0.362934, -6.87904, 0.00452995, -9.55435, -0.714546, -6.87931, -1.43715, -3.82203, -1.79958, -0.573589, -1.80172, 2.86593, -1.80399, 6.30552, -1.44584)
+
+[node name="Sprite2D" type="Sprite2D" parent="concaveLens" index="1"]
+scale = Vector2(1.95507, -0.140001)
+texture = ExtResource("5_hfasc")
+
+[connection signal="density_updated" from="customLight" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight2" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight3" to="focal" method="update_focal"]
+[connection signal="density_updated" from="customLight4" to="focal" method="update_focal"]
